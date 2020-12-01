@@ -12,7 +12,7 @@ A list of programming languages I can think of using, more may be added later an
  - [ ] C++
  - [ ] C#
  - [ ] Java
- - [ ] JavaScript
+ - [x] JavaScript (1)
  - [ ] TypeScript
  - [ ] Go
  - [ ] Haskell
