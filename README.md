@@ -7,7 +7,7 @@ Solutions to Advent of Code 2020 with a goal of using as many different programm
 A list of programming languages I can think of using, more may be added later and some many not be used:
 
  - [ ] Rust
- - [ ] Ruby
+ - [x] Ruby
  - [ ] C
  - [ ] C++
  - [ ] C#
