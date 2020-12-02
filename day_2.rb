@@ -1,11 +1,6 @@
 require "fileutils"
 
-data = if File.file?("input")
-    File.read("input")
-else
-    puts "input file doesn't exist"
-    ""
-end
+data = File.read("day_2.input")
 valid_sled = 0
 valid_toboggan = 0
 data.scan(/(\d+)\s*-\s*(\d+)\s+(.):\s*([^\s]*)/) do |x|
