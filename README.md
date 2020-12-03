@@ -8,7 +8,7 @@ A list of programming languages I can think of using, more may be added later an
 
  - [ ] Rust
  - [x] Ruby (2)
- - [ ] C
+ - [x] C (3)
  - [ ] C++
  - [ ] C#
  - [ ] Java
