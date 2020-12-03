@@ -14,6 +14,11 @@ struct Slope *slope_create(char *s) {
 	return slope;
 }
 
+void slope_rewind(struct Slope *slope) {
+	rewind(slope->file);
+	slope->line_start = 0;
+}
+
 void slope_destroy(struct Slope *slope) {
 	fclose(slope->file);
 }
@@ -52,25 +57,35 @@ void slope_skip_row(struct Slope *slope) {
 	fseek(slope->file, slope->line_start + offset, SEEK_SET);
 }
 
-unsigned int slope_3x1(struct Slope *slope) {
+unsigned int slope_slide(struct Slope *slope, int dx, int dy) {
 	unsigned int n = 0;
 	int ch;
+	slope_rewind(slope);
 	while ((ch = slope_get_char(slope)) != EOF) {
 		if (ch == '#') {
 			n += 1;
 		}
-		slope_skip_column(slope);
-		slope_skip_column(slope);
-		slope_skip_column(slope);
-		slope_skip_row(slope);
+		for (int i = dx; i > 0; i -= 1) {
+			slope_skip_column(slope);
+		}
+		for (int i = dy; i > 0; i -= 1) {
+			slope_skip_row(slope);
+		}
 	}
 	return n;
 }
 
 int main() {
 	struct Slope *slope = slope_create("./day_3.input");
-	unsigned int n = slope_3x1(slope);
+	unsigned int n = slope_slide(slope, 3, 1);
 	printf("number of collisions with a gradient of -1/3\n%d\n", n);
+	unsigned long collision_product
+			= slope_slide(slope, 1, 1)
+			* slope_slide(slope, 3, 1)
+			* slope_slide(slope, 5, 1)
+			* slope_slide(slope, 7, 1)
+			* slope_slide(slope, 1, 2);
+	printf("\ntree collision product\n%d\n", collision_product);
 	slope_destroy(slope);
 	return 0;
 }
