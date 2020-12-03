@@ -1,0 +1,5 @@
+*.c    text eol=crlf
+*.py   text eol=crlf
+*.java text eol=crlf
+*.js   text eol=crlf
+*.rb   text eol=crlf
