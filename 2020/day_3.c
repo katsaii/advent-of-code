@@ -85,7 +85,7 @@ int main() {
 			* slope_slide(slope, 5, 1)
 			* slope_slide(slope, 7, 1)
 			* slope_slide(slope, 1, 2);
-	printf("\ntree collision product\n%d\n", collision_product);
+	printf("\ntree collision product\n%lu\n", collision_product);
 	slope_destroy(slope);
 	return 0;
 }
