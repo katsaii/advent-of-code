@@ -4,24 +4,24 @@ import Data.Char (isSpace, isDigit)
 type Field = (String, String)
 type Passport = [Field]
 
-split1 :: Eq a => a -> [a] -> ([a], [a])
-split1 x xs = case break (== x) xs of
+pair :: Eq a => a -> [a] -> ([a], [a])
+pair x xs = case break (== x) xs of
     (a, _ : b) -> (a, b)
     x          -> x
 
-split :: Eq a => (a -> Bool) -> [a] -> [[a]]
-split f xs = case break f xs of
-    (a, _ : b) -> a : split f b
+splitBy :: Eq a => (a -> Bool) -> [a] -> [[a]]
+splitBy f xs = case break f xs of
+    (a, _ : b) -> a : splitBy f b
     (a, _)     -> a : []
 
-splitChar :: Eq a => a -> [a] -> [[a]]
-splitChar x = split (== x)
+split :: Eq a => a -> [a] -> [[a]]
+split x = splitBy (== x)
 
 identifyPassports :: String -> [Passport]
-identifyPassports s = map (map (split1 ':') . words . intercalate " ") passports
+identifyPassports s = map (map (pair ':') . words . intercalate " ") chunks
     where
-    records = splitChar '\n' s
-    passports = filter (/= []) $ split (all isSpace) records
+    lines = split '\n' s
+    chunks = filter (/= []) $ splitBy (all isSpace) lines
 
 fieldIsValid :: Field -> Bool
 fieldIsValid field = case field of
@@ -71,7 +71,7 @@ main :: IO ()
 main = do
     input <- readFile "in/day_4.txt"
     let passports = identifyPassports input
-    putStrLn "# of passports with the correct fields"
+    putStrLn "No. of passports with the correct fields"
     putStrLn $ show $ correctPassportCount passports
-    putStrLn "\n# of valid passports"
+    putStrLn "\nNo. of valid passports"
     putStrLn $ show $ validPassportCount passports
