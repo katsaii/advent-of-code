@@ -1,5 +1,5 @@
 const fs = require("fs");
-fs.readFile("day_1.input", (_, data) => {
+fs.readFile("in/day_1.txt", (_, data) => {
 	const dates = data.toString()
 			.split(/\s+/)
 			.map(x => parseInt(x, 10))

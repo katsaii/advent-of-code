@@ -5,7 +5,7 @@ all:
 	@nodejs day_1.js
 
 2:
-	@ruby day_2.js
+	@ruby day_2.rb
 
 3:
 	@clang -o day_3.out day_3.c

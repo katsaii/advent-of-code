@@ -76,9 +76,9 @@ unsigned int slope_slide(struct Slope *slope, int dx, int dy) {
 }
 
 int main() {
-	struct Slope *slope = slope_create("./day_3.input");
+	struct Slope *slope = slope_create("in/day_3.txt");
 	unsigned int n = slope_slide(slope, 3, 1);
-	printf("number of collisions with a gradient of -1/3\n%d\n", n);
+	printf("number of trees intersecting gradient 3 left 1 down\n%d\n", n);
 	unsigned long collision_product
 			= slope_slide(slope, 1, 1)
 			* slope_slide(slope, 3, 1)
