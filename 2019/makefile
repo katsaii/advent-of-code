@@ -1,10 +1,12 @@
 all:
 	@echo 'please supply a day number'
 
-1:
-	@ghc -o day_1.out day_1.hs
-	@./day_1.out
-	@rm day_1.out day_1.hi day_1.o
+bin:
+	@mkdir $@
+
+1: bin
+	@ghc -o bin/day_1.out -odir bin/o -hidir bin/hi day_1.hs
+	@./bin/day_1.out
 
 %:
 	@echo 'unknown day number'
