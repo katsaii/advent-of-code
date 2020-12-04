@@ -77,15 +77,20 @@ unsigned int slope_slide(struct Slope *slope, int dx, int dy) {
 
 int main() {
 	struct Slope *slope = slope_create("in/day_3.txt");
-	unsigned int n = slope_slide(slope, 3, 1);
-	printf("number of trees intersecting gradient 3 left 1 down\n%d\n", n);
-	unsigned long collision_product
-			= slope_slide(slope, 1, 1)
-			* slope_slide(slope, 3, 1)
-			* slope_slide(slope, 5, 1)
-			* slope_slide(slope, 7, 1)
-			* slope_slide(slope, 1, 2);
-	printf("\ntree collision product\n%lu\n", collision_product);
+	unsigned int path_1x1 = slope_slide(slope, 1, 1);
+	unsigned int path_3x1 = slope_slide(slope, 3, 1);
+	unsigned int path_5x1 = slope_slide(slope, 5, 1);
+	unsigned int path_7x1 = slope_slide(slope, 7, 1);
+	unsigned int path_1x2 = slope_slide(slope, 1, 2);
+	printf("tree intersection count for\n");
+	printf(" - 1x1 path => %d\n", path_1x1);
+	printf(" - 3x1 path => %d\n", path_3x1);
+	printf(" - 5x1 path => %d\n", path_5x1);
+	printf(" - 7x1 path => %d\n", path_7x1);
+	printf(" - 1x2 path => %d\n", path_1x2);
+	unsigned long long path_prod = path_1x1 * path_3x1 * path_5x1 * path_7x1 * path_1x2;
+	printf("\nproduct of intersections\n%d * %d * %d * %d * %d = %llu\n",
+			path_1x1, path_3x1, path_5x1, path_7x1, path_1x2, path_prod);
 	slope_destroy(slope);
 	return 0;
 }

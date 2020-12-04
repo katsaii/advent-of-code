@@ -11,7 +11,7 @@ fs.readFile("in/day_1.txt", (_, data) => {
 			const a = dates[i];
 			const b = dates[j];
 			if (a + b == 2020) {
-				console.log(a * b);
+				console.log((a * b).toString());
 			}
 		}
 	}
@@ -23,7 +23,7 @@ fs.readFile("in/day_1.txt", (_, data) => {
 				const b = dates[j];
 				const c = dates[k];
 				if (a + b + c == 2020) {
-					console.log(a * b * c);
+					console.log((a * b * c).toString());
 				}
 			}
 		}
