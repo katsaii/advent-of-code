@@ -11,16 +11,16 @@ all:
 	@ruby day_2.js
 
 3:
+ifneq "$(or $(CLANG),$(GCC))" ""
 ifdef CLANG
 	@clang day_3.c
-	@./a.out
-	@rm a.out
-else ifdef GCC
+else
 	@gcc day_3.c
+endif
 	@./a.out
 	@rm a.out
 else
-	@echo 'unknown c compiler'
+	@echo 'missing c compiler'
 endif
 
 %:
