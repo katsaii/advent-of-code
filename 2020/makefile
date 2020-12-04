@@ -8,9 +8,9 @@ all:
 	@ruby day_2.js
 
 3:
-	@clang day_3.c
-	@./a.out
-	@rm a.out
+	@clang -o day_3.out day_3.c
+	@./day_3.out
+	@rm day_3.out
 
 %:
 	@echo 'unknown day number'
