@@ -25,18 +25,18 @@ identifyPassports s = map (map (pair ':') . words . intercalate " ") chunks
 
 fieldIsValid :: Field -> Bool
 fieldIsValid field = case field of
-    ("byr", x) -> length x == 4 && range x 1920 2002
-    ("iyr", x) -> length x == 4 && range x 2010 2020
-    ("eyr", x) -> length x == 4 && range x 2020 2030
-    ("hgt", x) -> case break (not . isDigit) x of
+    ("byr", x)       -> length x == 4 && range x 1920 2002
+    ("iyr", x)       -> length x == 4 && range x 2010 2020
+    ("eyr", x)       -> length x == 4 && range x 2020 2030
+    ("hgt", x)       -> case break (not . isDigit) x of
         (s, "cm") -> range s 150 193
         (s, "in") -> range s 59 76
         _         -> False
     ("hcl", '#' : x) -> length x == 6 && isHexDec x
-    ("ecl", x) -> any (== x) ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-    ("pid", x) -> length x == 9 && isIntegral x
-    ("cid", _) -> True
-    _          -> False
+    ("ecl", x)       -> any (== x) ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+    ("pid", x)       -> length x == 9 && isIntegral x
+    ("cid", _)       -> True
+    _                -> False
     where
         isIntegral = all isDigit
         isHexDec = all (\x -> isDigit x || x `elem` "abcdef")
