@@ -44,7 +44,7 @@ fieldIsValid field = case field of
             | isIntegral s = n >= min && n <= max
             | otherwise    = False
             where
-            n = read s :: Integer
+            n = read s :: Int
 
 passportMissingFields :: Passport -> Bool
 passportMissingFields p = not $ all (`elem` fields) expectFields
@@ -55,17 +55,11 @@ passportMissingFields p = not $ all (`elem` fields) expectFields
 passportIsValid :: Passport -> Bool
 passportIsValid p = (not . passportMissingFields) p && all fieldIsValid p
 
-validPassportCount :: [Passport] -> Integer
-validPassportCount = foldr (+) 0 . map (truthy . passportIsValid)
-    where
-    truthy True = 1
-    truthy False = 0
+validPassportCount :: [Passport] -> Int
+validPassportCount = foldr (+) 0 . map (fromEnum . passportIsValid)
 
-correctPassportCount :: [Passport] -> Integer
-correctPassportCount = foldr (+) 0 . map (notTruthy . passportMissingFields)
-    where
-    notTruthy True  = 0
-    notTruthy False = 1
+correctPassportCount :: [Passport] -> Int
+correctPassportCount = foldr (+) 0 . map (fromEnum . not . passportMissingFields)
 
 main :: IO ()
 main = do
