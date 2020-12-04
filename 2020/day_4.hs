@@ -36,7 +36,7 @@ fieldIsValid field = case field of
     ("ecl", x) -> any (== x) ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
     ("pid", x) -> length x == 9 && isIntegral x
     ("cid", _) -> True
-    _ -> False
+    _          -> False
     where
         isIntegral = all isDigit
         isHexDec = all (\x -> isDigit x || x `elem` "abcdef")
@@ -64,7 +64,7 @@ validPassportCount = foldr (+) 0 . map (truthy . passportIsValid)
 correctPassportCount :: [Passport] -> Integer
 correctPassportCount = foldr (+) 0 . map (notTruthy . passportMissingFields)
     where
-    notTruthy True = 0
+    notTruthy True  = 0
     notTruthy False = 1
 
 main :: IO ()

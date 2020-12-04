@@ -1,10 +1,14 @@
 fuelRequirement :: Integer -> Integer
-fuelRequirement n = if x < 2 then 0 else x - 2
+fuelRequirement n
+    | x < 2     = 0
+    | otherwise = x - 2
     where
     x = n `div` 3
 
 fuelFuelRequirement :: Integer -> Integer
-fuelFuelRequirement n = if x == 0 then 0 else x + fuelFuelRequirement x
+fuelFuelRequirement n
+    | x == 0    = 0
+    | otherwise = x + fuelFuelRequirement x
     where
     x = fuelRequirement n
 
