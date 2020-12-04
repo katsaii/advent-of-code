@@ -3,3 +3,4 @@
 *.java text eol=crlf
 *.js   text eol=crlf
 *.rb   text eol=crlf
+*.hs   text eol=crlf
