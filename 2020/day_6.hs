@@ -1,5 +1,5 @@
 import Data.List (break, intercalate, nub)
-import Data.Char (isSpace, isDigit)
+import Data.Char (isSpace)
 
 type Group = [String]
 
@@ -9,10 +9,7 @@ splitBy f xs = case break f xs of
     (a, _)     -> a : []
 
 identifyGroups :: String -> [Group]
-identifyGroups s = chunks
-    where
-    lines = splitBy (== '\n') s
-    chunks = filter (/= []) $ splitBy (all isSpace) lines
+identifyGroups = splitBy (all isSpace) . splitBy (== '\n')
 
 groupAnswersAny :: Group -> Int
 groupAnswersAny = length . nub . concat
@@ -20,8 +17,9 @@ groupAnswersAny = length . nub . concat
 groupAnswersAll :: Group -> Int
 groupAnswersAll = length . intersection
     where
+    intersection []       = []
     intersection (x : []) = x
-    intersection (x : xs) = [c | c <- intersection xs, c `elem` x]
+    intersection (x : xs) = filter (`elem` x) $ intersection xs
 
 totalAnswers :: (Group -> Int) -> [Group] -> Int
 totalAnswers f = foldr (+) 0 . map f
