@@ -30,4 +30,7 @@ main :: IO ()
 main = do
     input <- readFile "in/day_6.txt"
     let groups = identifyGroups input
+    putStrLn "sum of answers from any individual in each group"
+    putStrLn $ show $ totalAnswers groupAnswersAny groups
+    putStrLn "\nsum of answers shared by all individuals in each group"
     putStrLn $ show $ totalAnswers groupAnswersAll groups
