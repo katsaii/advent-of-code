@@ -25,5 +25,9 @@ bin:
 	@ghc -o bin/day_6.out -odir bin/o -hidir bin/hi day_6.hs
 	@./bin/day_6.out
 
+7: bin
+	@swipl -o bin/day_7.out -g main -c day_7.pl 2> /dev/null
+	@./bin/day_7.out
+
 %:
 	@echo 'unknown day number'
