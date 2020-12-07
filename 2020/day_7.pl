@@ -62,6 +62,15 @@ bag_contains_eventually(AncestorModifier, AncestorColour, Modifier, Colour) :-
 	bag_contains(AncestorModifier, AncestorColour, _, ChildMod, ChildCol),
 	bag_contains_eventually(ChildMod, ChildCol, Modifier, Colour).
 
+bag_descendent_count(Modifier, Colour, N) :-
+	bag_descendent_count((1, Modifier, Colour), Total),
+	N is Total - 1. % ignore the root bag
+bag_descendent_count((Count, Modifier, Colour), N) :-
+	findall((ChildCount, ChildMod, ChildCol), bag_contains(Modifier, Colour, ChildCount, ChildMod, ChildCol), Children),
+	maplist(bag_descendent_count, Children, Counts),
+	foldl(plus, Counts, 1, M),
+	N is Count * M.
+
 main :-
 	read_lines("in/day_7.txt", Lines),
 	maplist(parse_rule, Lines, Rules),
@@ -69,11 +78,9 @@ main :-
 	findall((Modifier, Colour), bag_contains_eventually(Modifier, Colour, "shiny", "gold"), ContainsGoldShiny),
 	sort(ContainsGoldShiny, ContainsGoldShinyDistinct),
 	length(ContainsGoldShinyDistinct, ContainsGoldShinyLength),
-	write("the number of bags that could contain a gold shiny bag is"), nl,
+	write("the number of bags that could contain a gold shiny bag"), nl,
 	write(ContainsGoldShinyLength), nl,
+	bag_descendent_count("shiny", "gold", ShinyGoldCapacity),
+	nl, write("the number of individual bags required inside a gold shiny bag"), nl,
+	write(ShinyGoldCapacity), nl,
 	halt.
-
-/*
-light red bags contain 3 bright white bags.
-light blue bags contain 7 bright pink bags, 1 shiny gold bag, 9 faded blue bags.
- */
