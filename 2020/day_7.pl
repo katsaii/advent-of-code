@@ -43,12 +43,6 @@ assert_rule((Modifier, Colour, Children)) :- assert_rule_contents(Modifier, Colo
 assert_rule_contents(_, _, []).
 assert_rule_contents(Modifier, Colour, [(Count, ChildMod, ChildCol) | Tail]) :-
 	assertz(bag_contains(Modifier, Colour, Count, ChildMod, ChildCol)),
-	%write("bag_content("),
-	%write(Modifier), write(","),
-	%write(Colour), write(","),
-	%write(Count), write(","),
-	%write(ChildMod), write(","),
-	%write(ChildCol), write(")."), nl,
 	assert_rule_contents(Modifier, Colour, Tail).
 
 assert_rules([]).
