@@ -13,9 +13,9 @@ words(Atom, Words) :-
 	split_string(Atom, Space, Space, Words).
 
 abbreviate_rule(Words, Rule) :-
-	Words = [Modifier, Colour, "bags", "contain" | ContentsWords],
-	abbreviate_rule_contents(ContentsWords, Contents),
-	Rule = (Modifier, Colour, Contents).
+	Words = [Modifier, Colour, "bags", "contain" | ChildrenWords],
+	abbreviate_rule_contents(ChildrenWords, Children),
+	Rule = (Modifier, Colour, Children).
 
 is_separator("bag,").
 is_separator("bags,").
@@ -23,8 +23,7 @@ is_separator("bags,").
 is_terminator("bag.").
 is_terminator("bags.").
 
-abbreviate_rule_contents(["no", "other", Term | []], []) :-
-	is_terminator(Term).
+abbreviate_rule_contents(["no", "other", Term | []], []) :- is_terminator(Term).
 abbreviate_rule_contents([CountAtom, Modifier, Colour, Term | []], Contents) :-
 	is_terminator(Term),
 	atom_number(CountAtom, Count),
@@ -39,9 +38,42 @@ parse_rule(Atom, Rule) :-
 	words(Atom, Words),
 	abbreviate_rule(Words, Rule).
 
+assert_rule((Modifier, Colour, Children)) :- assert_rule_contents(Modifier, Colour, Children).
+
+assert_rule_contents(_, _, []).
+assert_rule_contents(Modifier, Colour, [(Count, ChildMod, ChildCol) | Tail]) :-
+	assertz(bag_contains(Modifier, Colour, Count, ChildMod, ChildCol)),
+	%write("bag_content("),
+	%write(Modifier), write(","),
+	%write(Colour), write(","),
+	%write(Count), write(","),
+	%write(ChildMod), write(","),
+	%write(ChildCol), write(")."), nl,
+	assert_rule_contents(Modifier, Colour, Tail).
+
+assert_rules([]).
+assert_rules([X | Xs]) :-
+	assert_rule(X),
+	assert_rules(Xs).
+
+bag_contains_eventually(AncestorModifier, AncestorColour, Modifier, Colour) :-
+	bag_contains(AncestorModifier, AncestorColour, _, Modifier, Colour).
+bag_contains_eventually(AncestorModifier, AncestorColour, Modifier, Colour) :-
+	bag_contains(AncestorModifier, AncestorColour, _, ChildMod, ChildCol),
+	bag_contains_eventually(ChildMod, ChildCol, Modifier, Colour).
+
 main :-
 	read_lines("in/day_7.txt", Lines),
 	maplist(parse_rule, Lines, Rules),
-	write(Rules), nl,
+	assert_rules(Rules),
+	findall((Modifier, Colour), bag_contains_eventually(Modifier, Colour, "shiny", "gold"), ContainsGoldShiny),
+	sort(ContainsGoldShiny, ContainsGoldShinyDistinct),
+	length(ContainsGoldShinyDistinct, ContainsGoldShinyLength),
+	write("the number of bags that could contain a gold shiny bag is"), nl,
+	write(ContainsGoldShinyLength), nl,
 	halt.
 
+/*
+light red bags contain 3 bright white bags.
+light blue bags contain 7 bright pink bags, 1 shiny gold bag, 9 faded blue bags.
+ */
