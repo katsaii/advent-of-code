@@ -1,1 +1,2 @@
 light red bags contain 3 bright white bags.
+light blue bags contain 7 bright pink bags, 1 shiny gold bag, 9 faded blue bags.
