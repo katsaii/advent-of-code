@@ -1,0 +1,9 @@
+tree intersection count for
+ - 1x1 path => 61
+ - 3x1 path => 265
+ - 5x1 path => 82
+ - 7x1 path => 70
+ - 1x2 path => 34
+
+product of intersections
+61 * 265 * 82 * 70 * 34 = 3154761400

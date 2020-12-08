@@ -10,7 +10,6 @@ fn run_program(prog : &[(String, isize)]) -> Result<isize, isize> {
         if pc >= max {
             break;
         }
-        let dist = max - pc;
         if seen_instruction.contains(&pc) {
             return Err(acc);
         } else {
@@ -49,7 +48,7 @@ fn flip_code(mut code : &mut (String, isize)) {
     code.0 = flip;
 }
 
-fn brute_force(mut prog : &mut [(String, isize)]) -> Option<isize> {
+fn brute_force(prog : &mut [(String, isize)]) -> Option<isize> {
     let mut code_id = 0;
     let max = prog.len();
     loop {

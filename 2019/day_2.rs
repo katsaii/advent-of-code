@@ -1,6 +1,6 @@
 use std::fs;
 
-pub fn run_intcode(mut codes : &mut [usize]) -> Option<()> {
+pub fn run_intcode(codes : &mut [usize]) -> Option<()> {
     let len = codes.len();
     let mut pc = 0;
     loop {
@@ -22,7 +22,7 @@ pub fn run_intcode(mut codes : &mut [usize]) -> Option<()> {
                 codes[dest] = a * b;
             }
             99 => break Some(()),
-            x  => break None
+            _  => break None
         }
         pc += 4;
     }
@@ -52,7 +52,7 @@ pub fn sat_intcode(codes : &[usize], target : usize) -> Option<(usize, usize)> {
 pub fn main() {
     let mut content = fs::read_to_string("in/day_2.txt").unwrap();
     content.pop(); // pop newline off of file contents
-    let mut codes = content
+    let codes = content
             .split(',')
             .map(|x| x.parse::<usize>().unwrap())
             .collect::<Vec<_>>();
