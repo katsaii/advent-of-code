@@ -29,5 +29,9 @@ bin:
 	@swipl -o bin/day_7.out -g main -c day_7.pl 2> /dev/null
 	@./bin/day_7.out
 
+8: bin
+	@rustc -o bin/day_8.out day_8.rs
+	@./bin/day_8.out
+
 %:
 	@echo 'unknown day number'
