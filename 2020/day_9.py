@@ -15,8 +15,7 @@ def find_contiguous_sums(xs, n):
                 end += 1
             if total == n:
                 sums.append(xs[start:end])
-        break
-    return sums
+        return sums
 
 def find_invalid_numbers(xs, offset):
     return [xs[i] for i in range(offset, len(xs)) if not len(find_pair_sums(xs[i - offset:i], xs[i]))]
@@ -24,7 +23,10 @@ def find_invalid_numbers(xs, offset):
 content = open("in/day_9.txt").read()[:-1]
 cipher = [int(x) for x in content.split("\n")]
 preamble = 25
-invalid_number = find_invalid_numbers(cipher, preamble)[0]
-contiguous_sum = find_contiguous_sums(cipher, invalid_number)[0]
+invalid_numbers = find_invalid_numbers(cipher, preamble)
+contiguous_sums = [find_contiguous_sums(cipher, n) for n in invalid_numbers]
+invalid_number = invalid_numbers[0]
+contiguous_sum = contiguous_sums[0][0]
 encryption_weakness = min(contiguous_sum) + max(contiguous_sum)
-print(encryption_weakness)
+print("this number does not satisfy the XMAS property\n%d" % invalid_number)
+print("\nencryption weakness of this number\n%d" % encryption_weakness)
