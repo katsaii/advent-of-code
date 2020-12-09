@@ -24,9 +24,7 @@ def seat_numbers(x):
     # seat id
     return row * 8 + col
 
-file = open("in/day_5.txt")
-content = file.read()[ : -1]
-file.close()
+content = open("in/day_5.txt").read()[:-1]
 seats = list(map(seat_numbers, content.split("\n")))
 print("highest seat number\n%s" % max(seats))
 converse = filter(lambda x: not (x in seats), range(0, 128 * 8))

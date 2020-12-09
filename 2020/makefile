@@ -33,5 +33,8 @@ bin:
 	@rustc -o bin/day_8.out day_8.rs
 	@./bin/day_8.out
 
+9:
+	@python3 day_9.py
+
 %:
 	@echo 'unknown day number'
