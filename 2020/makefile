@@ -37,8 +37,7 @@ bin:
 	@python3 day_9.py
 
 10:
-	@ghc -o bin/day_10.out -odir bin/o -hidir bin/hi day_10.hs
-	@./bin/day_10.out
+	@python3 day_10.py
 
 %:
 	@echo 'unknown day number'
