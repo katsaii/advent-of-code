@@ -24,8 +24,7 @@ def seat_numbers(x):
     # seat id
     return row * 8 + col
 
-content = open("in/day_5.txt").read()[:-1]
-seats = list(map(seat_numbers, content.split("\n")))
+seats = [seat_numbers(x) for x in open("in/day_5.txt").readlines()]
 print("highest seat number\n%s" % max(seats))
 converse = filter(lambda x: not (x in seats), range(0, 128 * 8))
 print("\nempty seats")
