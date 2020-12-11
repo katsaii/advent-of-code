@@ -40,7 +40,8 @@ bin:
 	@python3 day_10.py
 
 11:
-	@lua day_11.lua
+	@rustc -o bin/day_11.out day_11.rs
+	@./bin/day_11.out
 
 %:
 	@echo 'unknown day number'
