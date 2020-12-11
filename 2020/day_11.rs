@@ -1,29 +1,3 @@
-/*
-type Cell = (Int, Int, Bool)
-
-loadCells :: String -> [Cell]
-loadCells s = [(x, y, char == 'L') | (y, line) <- enumerate $ lines s, (x, char) <- enumerate line, char /= '.']
-    where
-    enumerate = zip [1..]
-
-musicalChairs :: [Cell] -> [Cell]
-musicalChairs field = map mutate field
-    where
-    mutate (x, y, b)
-        | b && n == 0 || not b && n >= 4 = (x, y, not b)
-        | otherwise = (x, y, b)
-        where
-            adjacent = [cell | cell@(x2, y2, b2) <- field, b /= b2, x2 `elem` [x - 1, x + 1], y2 `elem` [y - 1, y + 1]]
-            n = length adjacent
-
-main :: IO ()
-main = do
-    input <- readFile "in/day_6.txt"
-    let field = loadCells input
-    putStrLn $ show $ field
-
-*/
-
 use std::fs;
 
 type Field = Vec<Vec<char>>;
@@ -116,16 +90,6 @@ fn simulate_seating(field : &mut Field) {
 fn main() {
     let mut content = fs::read_to_string("in/day_11.txt").unwrap();
     content.pop(); // pop newline off of file contents
-    content = r"#.##.##.##
-#######.##
-#.#.#..#..
-####.##.##
-#.##.##.##
-#.#####.##
-..#.#.....
-##########
-#.######.#
-#.#####.##".to_string();
     let mut field = content
             .split('\n')
             .map(|x| x.chars().collect())
@@ -139,5 +103,5 @@ fn main() {
             }
         }
     }
-    println!("seat count\n{}", seat_count);
+    println!("occupied seat count\n{}", seat_count);
 }
