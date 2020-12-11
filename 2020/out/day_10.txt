@@ -1,0 +1,5 @@
+product of the number of 1 and 3 jolt differences
+2112
+
+number of combinations of adapter
+3022415986688
