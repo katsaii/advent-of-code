@@ -39,5 +39,8 @@ bin:
 10:
 	@python3 day_10.py
 
+11:
+	@lua day_11.lua
+
 %:
 	@echo 'unknown day number'
