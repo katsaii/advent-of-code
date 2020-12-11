@@ -3,60 +3,50 @@ use std::fs;
 type Field = Vec<Vec<char>>;
 type Mutations = Vec<(usize, usize)>;
 
-fn get_adjacent(x : usize, y : usize, w : usize, h : usize) -> Mutations {
-    let mut adjacent = Vec::new();
-    if x > 0 {
-        if y > 0 {
-            adjacent.push((x - 1, y - 1));
-        }
-        adjacent.push((x - 1, y));
-        if y < h {
-            adjacent.push((x - 1, y + 1));
-        }
-    }
-    if y > 0 {
-        adjacent.push((x, y - 1));
-    }
-    if y < h {
-        adjacent.push((x, y + 1));
-    }
-    if x < w {
-        if y > 0 {
-            adjacent.push((x + 1, y - 1));
-        }
-        adjacent.push((x + 1, y));
-        if y < h {
-            adjacent.push((x + 1, y + 1));
-        }
-    }
-    adjacent
-}
-
-fn get_mutations(field : &Field) -> Mutations {
+fn get_mutations(field : &Field, threshold : usize) -> Mutations {
     let mut mutations = Vec::new();
     let h = field.len();
     for (y, line) in field.iter().enumerate() {
         let w = line.len();
     'search:
         for (x, ch) in line.iter().enumerate() {
+            let mut adjacent = Vec::new();
+            if x > 0 {
+                if y > 0 {
+                    adjacent.push((x - 1, y - 1));
+                }
+                adjacent.push((x - 1, y));
+                if y < h {
+                    adjacent.push((x - 1, y + 1));
+                }
+            }
+            if y > 0 {
+                adjacent.push((x, y - 1));
+            }
+            if y < h {
+                adjacent.push((x, y + 1));
+            }
+            if x < w {
+                if y > 0 {
+                    adjacent.push((x + 1, y - 1));
+                }
+                adjacent.push((x + 1, y));
+                if y < h {
+                    adjacent.push((x + 1, y + 1));
+                }
+            }
+            let mut count = 0;
+            for (ax, ay) in adjacent {
+                if let Some('#') = field.get(ay).and_then(|line| line.get(ax)) {
+                    count += 1;
+                }
+            }
             match ch {
-                'L' => {
-                    for (ax, ay) in get_adjacent(x, y, w, h) {
-                        if let Some('#') = field.get(ay).and_then(|line| line.get(ax)) {
-                            continue 'search;
-                        }
-                    }
+                'L' => if count != 0 {
+                    continue 'search;
                 },
-                '#' => {
-                    let mut count = 0;
-                    for (ax, ay) in get_adjacent(x, y, w, h) {
-                        if let Some('#') = field.get(ay).and_then(|line| line.get(ax)) {
-                            count += 1;
-                        }
-                    }
-                    if count < 4 {
-                        continue 'search;
-                    }
+                '#' => if count < threshold {
+                    continue 'search;
                 },
                 _   => continue 'search
             }
@@ -77,14 +67,24 @@ fn apply_mutations(mutations : Mutations, field : &mut Field) {
     }
 }
 
-fn simulate_seating(field : &mut Field) {
+fn simulate_seating(field : &Field, threshold : usize) -> usize {
+    let mut field = field.clone();
     loop {
-        let mutations = get_mutations(field);
+        let mutations = get_mutations(&field, threshold);
         if mutations.len() == 0 {
             break;
         }
-        apply_mutations(mutations, field);
+        apply_mutations(mutations, &mut field);
     }
+    let mut seat_count = 0;
+    for line in field {
+        for ch in line {
+            if ch == '#' {
+                seat_count += 1;
+            }
+        }
+    }
+    seat_count
 }
 
 fn main() {
@@ -94,14 +94,6 @@ fn main() {
             .split('\n')
             .map(|x| x.chars().collect())
             .collect::<Field>();
-    simulate_seating(&mut field);
-    let mut seat_count = 0;
-    for line in field {
-        for ch in line {
-            if ch == '#' {
-                seat_count += 1;
-            }
-        }
-    }
-    println!("occupied seat count\n{}", seat_count);
+    let naive_seat_count = simulate_seating(&field, 4);
+    println!("occupied seat count\n{}", naive_seat_count);
 }
