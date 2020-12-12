@@ -96,34 +96,37 @@ type Mutations = Vec<usize>;
 
 static DIRECTIONS : [(isize, isize); 8] = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)];
 
-fn find_neighbour(grid : &Grid<char>, x : usize, y : usize, orientation : usize) -> Option<(usize, usize)> {
+fn find_neighbour(grid : &Grid<char>, mut x : usize, mut y : usize, orientation : usize, dist : usize) -> Option<(usize, usize)> {
     let (dx, dy) = DIRECTIONS[orientation];
-    if dx == -1 && x == 0 || dy == -1 && y == 0 {
-        return None;
+    for _ in 1..=dist {
+        if dx == -1 && x == 0 || dy == -1 && y == 0 {
+            return None;
+        }
+        x = (x as isize + dx) as usize;
+        y = (y as isize + dy) as usize;
+        let ch = grid.get(y)?.get(x)?;
+        if !matches!(ch, '.') {
+            return Some((x, y))
+        }
     }
-    let tx = (x as isize + dx) as usize;
-    let ty = (y as isize + dy) as usize;
-    let ch = grid.get(ty)?.get(tx)?;
-    if matches!(ch, '.') {
-        None
-    } else {
-        Some((tx, ty))
-    }
+    None
 }
 
-fn find_neighbours(grid : &Grid<char>, x : usize, y : usize) -> Vec<(usize, usize)> {
-    (0..8).map(|i| find_neighbour(grid, x, y, i))
+fn find_neighbours(grid : &Grid<char>, x : usize, y : usize, dist : usize) -> Vec<(usize, usize)> {
+    (0..8).map(|i| find_neighbour(grid, x, y, i, dist))
             .filter(|x| x.is_some())
             .map(|x| x.unwrap())
             .collect()
 }
 
-fn load_seating(map : String) -> Seating {
+fn load_seating(map : &str, mdist : usize) -> Seating {
     let grid = map
+            .clone()
             .trim()
             .split('\n')
             .map(|x| x.chars().collect())
             .collect::<Grid<char>>();
+    let dist = 4;
     let mut stack = Vec::new();
     for (y, line) in grid.iter().enumerate() {
     'search:
@@ -142,7 +145,7 @@ fn load_seating(map : String) -> Seating {
         }
         let id = seating.len();
         seat_id.insert(pos, id);
-        let neighbours = find_neighbours(&grid, pos.0, pos.1);
+        let neighbours = find_neighbours(&grid, pos.0, pos.1, dist);
         seating.push((pos.clone(), neighbours.clone()));
         for neighbour in neighbours {
             stack.push(neighbour);
@@ -159,14 +162,14 @@ fn load_seating(map : String) -> Seating {
             .collect()
 }
 
-fn seating_find_mutations(seating : &Seating) -> Mutations {
+fn seating_find_mutations(seating : &Seating, threshold : usize) -> Mutations {
     let mut mutations = Vec::new();
     for (i, seat) in seating.iter().enumerate() {
         let count = seat.1.iter()
                 .filter(|neighbour| seating[**neighbour].0)
                 .count();
         if seat.0 {
-            if count < 4 {
+            if count < threshold {
                 continue;
             }
         } else {
@@ -186,14 +189,13 @@ fn seating_apply_mutations(seating : &mut Seating, mutations : Mutations) {
     }
 }
 
-fn seating_simulate(seating : &Seating) -> usize {
-    let mut seating = seating.clone();
+fn seating_simulate(seating : &mut Seating, threshold : usize) -> usize {
     loop {
-        let mutations = seating_find_mutations(&seating);
+        let mutations = seating_find_mutations(seating, threshold);
         if mutations.len() == 0 {
             break;
         }
-        seating_apply_mutations(&mut seating, mutations);
+        seating_apply_mutations(seating, mutations);
     }
     seating.iter()
             .filter(|(occupied, _)| *occupied)
@@ -201,17 +203,9 @@ fn seating_simulate(seating : &Seating) -> usize {
 }
 
 fn main() {
-    let mut content = fs::read_to_string("in/day_11.txt").unwrap();
-    let seating = load_seating(content);
-    let naive_seat_count = seating_simulate(&seating);
+    let content = fs::read_to_string("in/day_11.txt").unwrap();
+    let naive_seat_count = seating_simulate(&mut load_seating(&content, 1), 4);
     println!("naive occupied seat count\n{}", naive_seat_count);
-
-    /*content.pop(); // pop newline off of file contents
-    let mut field = content
-            .split('\n')
-            .map(|x| x.chars().collect())
-            .collect::<Field>();
-    let naive_seat_count = simulate_seating(&field, 4);
-    println!("occupied seat count\n{}", naive_seat_count);*/
-
+    let correct_seat_count = seating_simulate(&mut load_seating(&content, 1000), 5);
+    println!("\ncorrect occupied seat count\n{}", correct_seat_count);
 }
