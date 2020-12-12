@@ -39,9 +39,13 @@ bin:
 10:
 	@python3 day_10.py
 
-11:
+11: bin
 	@rustc -o bin/day_11.out day_11.rs
 	@./bin/day_11.out
+
+12: bin
+	@clang -o bin/day_12.out day_12.c
+	@./bin/day_12.out
 
 %:
 	@echo 'unknown day number'

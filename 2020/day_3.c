@@ -14,13 +14,14 @@ struct Slope *slope_create(char *s) {
 	return slope;
 }
 
+void slope_destroy(struct Slope *slope) {
+	fclose(slope->file);
+	free(slope);
+}
+
 void slope_rewind(struct Slope *slope) {
 	rewind(slope->file);
 	slope->line_start = 0;
-}
-
-void slope_destroy(struct Slope *slope) {
-	fclose(slope->file);
 }
 
 int slope_get_char(struct Slope *slope) {
