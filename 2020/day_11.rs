@@ -1,7 +1,4 @@
-use std::{
-    fs, cmp,
-    collections::{ VecDeque, HashMap }
-};
+use std::{ fs, cmp, collections::HashMap };
 
 type Grid<T> = Vec<Vec<T>>;
 type Seating = Vec<(bool, Vec<usize>)>;
