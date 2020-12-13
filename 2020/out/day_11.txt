@@ -1,0 +1,5 @@
+naive occupied seat count
+2321
+
+correct occupied seat count
+2102

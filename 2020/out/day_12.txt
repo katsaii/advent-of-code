@@ -1,0 +1,5 @@
+distance after the journey
+1589
+
+distance after the journey using waypoints
+23960
