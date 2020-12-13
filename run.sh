@@ -26,6 +26,9 @@ case $FILEEXT in
 	js)
 		nodejs "$IN"
 		;;
+	lua)
+		lua "$IN"
+		;;
 	pl)
 		swipl -o "$OUT" -g main -c "$IN" 2> /dev/null
 		"$OUT"
