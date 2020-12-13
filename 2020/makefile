@@ -1,51 +1,41 @@
 all:
 	@echo 'please supply a day number'
 
-bin:
-	@mkdir $@
-
 1:
-	@nodejs day_1.js
+	@../run.sh day_1.js
 
 2:
-	@ruby day_2.rb
+	@../run.sh day_2.rb
 
-3: bin
-	@clang -o bin/day_3.out day_3.c
-	@./bin/day_3.out
+3:
+	@../run.sh day_3.c
 
-4: bin
-	@ghc -o bin/day_4.out -odir bin/o -hidir bin/hi day_4.hs
-	@./bin/day_4.out
+4:
+	@../run.sh day_4.hs
 
 5:
-	@python3 day_5.py
+	@../run.sh day_5.py
 
-6: bin
-	@ghc -o bin/day_6.out -odir bin/o -hidir bin/hi day_6.hs
-	@./bin/day_6.out
+6:
+	@../run.sh day_6.hs
 
-7: bin
-	@swipl -o bin/day_7.out -g main -c day_7.pl 2> /dev/null
-	@./bin/day_7.out
+7:
+	@../run.sh day_7.pl
 
-8: bin
-	@rustc -o bin/day_8.out day_8.rs
-	@./bin/day_8.out
+8:
+	@../run.sh day_8.rs
 
 9:
-	@python3 day_9.py
+	@../run.sh day_9.py
 
 10:
-	@python3 day_10.py
+	@../run.sh day_10.py
 
-11: bin
-	@rustc -o bin/day_11.out day_11.rs
-	@./bin/day_11.out
+11:
+	@../run.sh day_11.rs
 
-12: bin
-	@clang -o bin/day_12.out day_12.c
-	@./bin/day_12.out
+12:
+	@../run.sh day_12.c
 
 %:
 	@echo 'unknown day number'
