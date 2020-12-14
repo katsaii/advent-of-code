@@ -1,5 +1,5 @@
-sum of answers from any individual in each group
-6680
+No. of passports with the correct fields
+245
 
-sum of answers shared by all individuals in each group
-3117
+No. of valid passports
+133

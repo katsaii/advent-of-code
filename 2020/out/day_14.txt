@@ -1,0 +1,5 @@
+the sum of all memory after initialisation
+14553106347726
+
+the sum of all memory after initialisation using version 2
+2737766154126

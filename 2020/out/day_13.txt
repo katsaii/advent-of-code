@@ -1,0 +1,5 @@
+the earliest bus multiplied by the number of minutes wait
+787 * 6 = 4722
+
+the earliest timespan where busses depart at offsets matching their bus position
+825305207525452 -- 825305207525529
