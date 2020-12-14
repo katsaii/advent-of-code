@@ -22,37 +22,26 @@ function find_earliest_bus(depart, busses)
 	return earliest_bus_id, minimum_wait
 end
 
-function find_furthest_jump(depart, busses)
-	local maximum_jump = 0
+function find_synchronisation_point(busses)
+	local step = 1
+	local t = 0
 	for i, bus_id in ipairs(busses) do
 		if bus_id ~= 0 then
-			local off = (depart + i - 1) % bus_id
-			if off ~= 0 then
-				local jump = bus_id - off
-				if jump > maximum_jump then
-					maximum_jump = jump
-				end
+			local off = i - 1
+			while (t + off) % bus_id ~= 0 do
+				t = t + step
 			end
+			step = step * bus_id
 		end
 	end
-	return maximum_jump
-end
-
-function find_timespan(busses)
-	local t = 1
-	repeat
-		local jump = find_furthest_jump(t, busses)
-		t = t + jump
-	until jump == 0
-	return t, t + #busses
+	return t, t + #busses - 1
 end
 
 file, _ = io.open("in/day_13.txt")
 depart = tonumber(file:read())
 busses = find_bus_ids(file:read())
 bus_id, wait = find_earliest_bus(depart, busses)
-start, limit = find_timespan(find_bus_ids("2,4,5,7,8,98,100,3000"))
-print(jump)
+start, limit = find_synchronisation_point(busses)
 print("the earliest bus multiplied by the number of minutes wait")
 print(("%d * %d = %d"):format(bus_id, wait, bus_id * wait))
 print("\nthe earliest timespan where busses depart at offsets matching their bus position")
