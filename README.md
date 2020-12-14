@@ -19,6 +19,7 @@ Solutions to Advent of Code with a goal of using as many different programming l
 | [Day 11](./2020/day_11.rs)   | Rust                      |
 | [Day 12](./2020/day_12.c)    | C                         |
 | [Day 13](./2020/day_13.lua)  | Lua                       |
+| [Day 14](./2020/day_14.rb)   | Ruby                      |
 
 ## 2019 Summary
 
