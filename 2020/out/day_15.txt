@@ -1,1 +1,5 @@
+the 2020th element in the sequence
+517
+
+the 30 millionth element in the sequence
 1047739

@@ -1,6 +1,8 @@
 #include <map>
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 long long nth_memory_element(long long n, std::vector<long long> initial) {
 	std::map<long long, long long> seen;
@@ -23,6 +25,21 @@ long long nth_memory_element(long long n, std::vector<long long> initial) {
 }
 
 int main() {
-	std::cout << nth_memory_element(2020, { 5, 2, 8, 16, 18, 0, 1 }) << std::endl;
+	std::stringstream ss;
+	std::ifstream file;
+	file.open("in/day_15.txt");
+	ss << file.rdbuf();
+	file.close();
+	std::vector<long long> input;
+	for (int n; ss >> n;) {
+		input.push_back(n);
+		if (ss.peek() == ',') {
+			ss.ignore();
+		}
+	}
+	long long elem_2020 = nth_memory_element(2020, input);
+	std::cout << "the 2020th element in the sequence" << std::endl << elem_2020 << std::endl;
+	long long elem_30mil = nth_memory_element(30000000, input);
+	std::cout << std::endl << "the 30 millionth element in the sequence" << std::endl << elem_30mil << std::endl;
 	return 0;
 }
