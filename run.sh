@@ -25,6 +25,10 @@ case $FILEEXT in
 		clang -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
+	cpp)
+		clang++ -o "$BIN" "$IN"
+		"$BIN" | tee "$OUT"
+		;;
 	hs)
 		ghc -o "$BIN" -odir "$BINDIR/o" -hidir "$BINDIR/h" "$IN"
 		"$BIN" | tee "$OUT"
