@@ -2,31 +2,31 @@ all:
 	@echo 'please supply a day number'
 
 1:
-	@../run.sh day_1.js
+	@../run.sh day_01.js
 
 2:
-	@../run.sh day_2.rb
+	@../run.sh day_02.rb
 
 3:
-	@../run.sh day_3.c
+	@../run.sh day_03.c
 
 4:
-	@../run.sh day_4.hs
+	@../run.sh day_04.hs
 
 5:
-	@../run.sh day_5.py
+	@../run.sh day_05.py
 
 6:
-	@../run.sh day_6.hs
+	@../run.sh day_06.hs
 
 7:
-	@../run.sh day_7.pl
+	@../run.sh day_07.pl
 
 8:
-	@../run.sh day_8.rs
+	@../run.sh day_08.rs
 
 9:
-	@../run.sh day_9.py
+	@../run.sh day_09.py
 
 10:
 	@../run.sh day_10.py
