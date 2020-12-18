@@ -46,5 +46,8 @@ all:
 15:
 	@../run.sh day_15.cpp
 
+18:
+	@../run.sh day_18.hs
+
 %:
 	@echo 'unknown day number'
