@@ -102,4 +102,7 @@ homeworkSum p = foldr (+) 0 . map (unwrap . parse p) . lines
 
 main = do
     input <- readFile "in/day_18.txt"
+    putStrLn $ "sum of answers for basic maths homework"
+    putStrLn $ show $ homeworkSum expr input
+    putStrLn $ "\nsum of answers for advanced maths homework"
     putStrLn $ show $ homeworkSum exprAdvanced input
