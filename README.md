@@ -21,6 +21,9 @@ Solutions to Advent of Code with a goal of using as many different programming l
 | [Day 13](./2020/day_13.lua)  | Lua                       |
 | [Day 14](./2020/day_14.rb)   | Ruby                      |
 | [Day 15](./2020/day_15.cpp)  | C++                       |
+| Day 16                       | -                         |
+| Day 17                       | -                         |
+| [Day 18](./2020/day_18.hs)   | Haskell                   |
 
 ## 2019 Summary
 
