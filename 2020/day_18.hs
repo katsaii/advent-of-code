@@ -58,35 +58,48 @@ value = do
     xs <- many $ sat isDigit
     return $ read xs
 
-expr :: Parser Int
-expr = exprSumAndProd
-
-exprSumAndProd :: Parser Int
-exprSumAndProd = line <|> exprGroup
-    where
-    code = do
-        op <- symbol '+' <|> symbol '*'
-        val <- exprGroup
-        return (if op == '+' then (+) else (*), val)
-    line = do 
-        a <- exprGroup
-        codes <- many code
-        return $ foldl (\acc (f, val) -> f acc val) a codes
-
-exprGroup :: Parser Int
-exprGroup = paren <|> value
+grouping :: Parser Int -> Parser Int
+grouping p = paren <|> value
     where
     paren = do
         symbol '('
-        n <- expr
+        n <- p
         symbol ')'
         return n
 
-homeworkSum :: String -> Int
-homeworkSum = foldr (+) 0 . map (unwrap . parse expr) . lines
+expr :: Parser Int
+expr = line <|> grouping expr
+    where
+    code = do
+        op <- symbol '+' <|> symbol '*'
+        val <- grouping expr
+        return (if op == '+' then (+) else (*), val)
+    line = do 
+        a <- grouping expr
+        codes <- many code
+        return $ foldl (\acc (f, val) -> f acc val) a codes
+
+exprAdvanced :: Parser Int
+exprAdvanced = exprProd
+    where
+    exprSum = plus <|> grouping exprAdvanced
+        where
+        plus = do
+            a <- grouping exprAdvanced
+            bs <- many (symbol '+' >> grouping exprAdvanced)
+            return $ foldl (+) a bs
+    exprProd = times <|> exprSum
+        where
+        times = do
+            a <- exprSum
+            bs <- many (symbol '*' >> exprSum)
+            return $ foldl (*) a bs
+
+homeworkSum :: Parser Int -> String -> Int
+homeworkSum p = foldr (+) 0 . map (unwrap . parse p) . lines
     where
     unwrap (Just (x, _)) = x
 
 main = do
     input <- readFile "in/day_18.txt"
-    putStrLn $ show $ homeworkSum input
+    putStrLn $ show $ homeworkSum exprAdvanced input
