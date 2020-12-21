@@ -26,7 +26,7 @@ totalAnswers f = foldr (+) 0 . map f
 
 main :: IO ()
 main = do
-    input <- readFile "in/day_6.txt"
+    input <- readFile "in/day_06.txt"
     let groups = identifyGroups input
     putStrLn "sum of answers from any individual in each group"
     putStrLn $ show $ totalAnswers groupAnswersAny groups

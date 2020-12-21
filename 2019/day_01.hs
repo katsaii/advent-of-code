@@ -17,7 +17,7 @@ fuelSum = foldr (+) 0
 
 main :: IO ()
 main = do
-    input <- readFile "in/day_1.txt"
+    input <- readFile "in/day_01.txt"
     let xs = map read $ words input :: [Int]
     putStrLn "total fuel requirement (naive)"
     putStrLn $ show $ fuelSum $ map fuelRequirement xs

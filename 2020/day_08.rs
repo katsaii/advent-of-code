@@ -66,7 +66,7 @@ fn brute_force(prog : &mut [(String, isize)]) -> Option<isize> {
 }
 
 fn main() {
-    let mut content = fs::read_to_string("in/day_8.txt").unwrap();
+    let mut content = fs::read_to_string("in/day_08.txt").unwrap();
     content.pop(); // pop newline off of file contents
     let mut codes = content
             .split('\n')

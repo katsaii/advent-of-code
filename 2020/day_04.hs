@@ -49,7 +49,7 @@ passportIsValid p = (not . passportMissingFields) p && all fieldIsValid p
 
 main :: IO ()
 main = do
-    input <- readFile "in/day_4.txt"
+    input <- readFile "in/day_04.txt"
     let passports = identifyPassports input
     putStrLn "No. of passports with the correct fields"
     putStrLn $ show $ length $ filter (not . passportMissingFields) passports

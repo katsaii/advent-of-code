@@ -1,4 +1,4 @@
-data = File.read("in/day_2.txt")
+data = File.read("in/day_02.txt")
 valid_sled = 0
 valid_toboggan = 0
 data.scan(/(\d+)\s*-\s*(\d+)\s+(.):\s*([^\s]*)/) do |x|

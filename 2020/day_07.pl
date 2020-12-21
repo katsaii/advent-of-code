@@ -66,7 +66,7 @@ bag_descendent_count((Count, Modifier, Colour), N) :-
 	N is Count * M.
 
 main :-
-	read_lines("in/day_7.txt", Lines),
+	read_lines("in/day_07.txt", Lines),
 	maplist(parse_rule, Lines, Rules),
 	assert_rules(Rules),
 	findall((Modifier, Colour), bag_contains_eventually(Modifier, Colour, "shiny", "gold"), ContainsGoldShiny),

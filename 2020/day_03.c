@@ -77,7 +77,7 @@ unsigned int slope_slide(struct Slope *slope, int dx, int dy) {
 }
 
 int main() {
-	struct Slope *slope = slope_create("in/day_3.txt");
+	struct Slope *slope = slope_create("in/day_03.txt");
 	unsigned int path_1x1 = slope_slide(slope, 1, 1);
 	unsigned int path_3x1 = slope_slide(slope, 3, 1);
 	unsigned int path_5x1 = slope_slide(slope, 5, 1);

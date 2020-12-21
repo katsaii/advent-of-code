@@ -50,7 +50,7 @@ pub fn sat_intcode(codes : &[usize], target : usize) -> Option<(usize, usize)> {
 }
 
 pub fn main() {
-    let mut content = fs::read_to_string("in/day_2.txt").unwrap();
+    let mut content = fs::read_to_string("in/day_02.txt").unwrap();
     content.pop(); // pop newline off of file contents
     let codes = content
             .split(',')

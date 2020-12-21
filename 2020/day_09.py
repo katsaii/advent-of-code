@@ -20,7 +20,7 @@ def find_contiguous_sums(xs, n):
 def find_invalid_numbers(xs, offset):
     return [xs[i] for i in range(offset, len(xs)) if not len(find_pair_sums(xs[i - offset:i], xs[i]))]
 
-cipher = [int(x) for x in open("in/day_9.txt").readlines()]
+cipher = [int(x) for x in open("in/day_09.txt").readlines()]
 preamble = 25
 invalid_numbers = find_invalid_numbers(cipher, preamble)
 contiguous_sums = [find_contiguous_sums(cipher, n) for n in invalid_numbers]
