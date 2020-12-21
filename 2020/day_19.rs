@@ -72,23 +72,16 @@ impl From<&str> for Grammar {
     }
 }
 
-fn main() {
-    let content = "
-0: 4 1 5
-1: 2 3 | 3 2
-2: 4 4 | 5 5
-3: 4 5 | 5 4
-4: \"a\"
-5: \"b\"
+fn count_matches(grammar : &Grammar, src : &str) -> usize {
+    src.lines()
+            .filter(|word| grammar.matches(word))
+            .count()
+}
 
-yuh
-        ".to_string();
-        // fs::read_to_string("in/day_19.txt").unwrap();
+fn main() {
+    let content = fs::read_to_string("in/day_19.txt").unwrap();
     let (rules, words) = break_pair(content.trim(), "\n\n");
-    let grammar = Grammar::from(rules);
-    println!("{:?}", grammar.matches("ababbb"));
-    println!("{:?}", grammar.matches("bababa"));
-    println!("{:?}", grammar.matches("abbbab"));
-    println!("{:?}", grammar.matches("aaabbb"));
-    println!("{:?}", grammar.matches("aaaabbb"));
+    let mut grammar = Grammar::from(rules);
+    let match_count = count_matches(&grammar, words);
+    println!("number of matches for this grammar\n{}", match_count);
 }

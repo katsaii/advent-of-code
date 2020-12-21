@@ -1,5 +1,2 @@
-true
-false
-true
-false
-false
+number of matches for this grammar
+285
