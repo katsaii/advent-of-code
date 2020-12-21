@@ -1,4 +1,3 @@
-
 def decoder_version_1(kernal)
     mask_on = 0
     mask_off = 0
@@ -23,7 +22,7 @@ def apply_mask(n, mask, i=0)
     case mask[i]
         when "0" then apply_mask(n, mask, i + 1)
         when "1" then apply_mask(n | (1 << i), mask, i + 1)
-        when "X" then 
+        when "X" then
                 apply_mask(n | (1 << i), mask, i + 1) +
                 apply_mask(n & (~(1 << i)), mask, i + 1)
     end
@@ -37,9 +36,7 @@ def decoder_version_2(kernal)
             mask = match.captures[0].reverse
         else
             key, val = line.match(/\s*mem\[(\d+)\]\s*=\s*(\d+)\s*/).captures
-            apply_mask(key.to_i, mask).each do |x|
-                mem[x] = val.to_i
-            end
+            apply_mask(key.to_i, mask).each{|x| mem[x] = val.to_i}
         end
     end
     mem.values.sum

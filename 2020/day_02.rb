@@ -1,5 +1,3 @@
-require "fileutils"
-
 data = File.read("in/day_2.txt")
 valid_sled = 0
 valid_toboggan = 0
