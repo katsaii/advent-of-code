@@ -1,2 +1,2 @@
-{"eggs"=>["rffqhl", "tgmzqjz", "dglm"], "shellfish"=>["tgmzqjz"], "dairy"=>["xvtrfz", "tgmzqjz", "cdqvp", "mfqgx"], "sesame"=>["xvtrfz", "tgmzqjz", "mfqgx"], "peanuts"=>["tgmzqjz", "zhqjs", "rbpg"], "fish"=>["xvtrfz", "tgmzqjz", "mfqgx", "zhqjs"], "wheat"=>["cdqvp", "rffqhl"], "soy"=>["tgmzqjz", "mfqgx"]}
 2061
+cdqvp,dglm,zhqjs,rbpg,xvtrfz,tgmzqjz,mfqgx,rffqhl

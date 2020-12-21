@@ -25,5 +25,24 @@ end
 safe_ingredient_count = all_ingredients.filter do |x|
     safe_ingredients.include?(x)
 end.length
-puts allergen_ingredients
+ingredient_allergens = { }
+loop do
+    allergen, ingredients = allergen_ingredients.find do |key, value|
+        value.length == 1
+    end
+    if not allergen
+        break
+    end
+    ingredient = ingredients[0]
+    ingredient_allergens[ingredient] = allergen
+    allergen_ingredients.transform_values! do |x|
+        x - ingredients
+    end
+end
+unsafe_ingredients = ingredient_allergens.sort_by do |_, allergen|
+    allergen
+end.map do |ingredient, _|
+    ingredient
+end
 puts safe_ingredient_count
+puts unsafe_ingredients.join(",")
