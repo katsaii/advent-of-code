@@ -24,6 +24,7 @@ Solutions to Advent of Code with a goal of using as many different programming l
 | Day 16                       | -                         |
 | Day 17                       | -                         |
 | [Day 18](./2020/day_18.hs)   | Haskell                   |
+| [Day 18](./2020/day_19.rs)   | Rust                      |
 
 ## 2019 Summary
 
