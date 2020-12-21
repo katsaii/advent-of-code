@@ -19,7 +19,37 @@ struct Grammar {
 
 impl Grammar {
     fn matches(&self, word : &str) -> bool {
-        matches!(self.check(0, word), Some(""))
+        let matches = self.check_2(0, word);
+        matches.iter().any(|x| matches!(*x, ""))
+    }
+
+    fn check_2<'a>(&self, id : usize, word : &'a str) -> Vec<&'a str> {
+        let mut matches = Vec::new();
+        if let Some(production) = self.productions.get(&id) {
+            match production {
+                Production::Nonterminal(nonterminal) => {
+                    for rule in nonterminal {
+                        let mut suffixes = vec![word];
+                        for id in rule {
+                            let mut new_suffixes = Vec::new();
+                            for suffix in suffixes {
+                                new_suffixes.extend(self.check_2(*id, suffix));
+                            }
+                            suffixes = new_suffixes;
+                        }
+                        matches.extend(suffixes);
+                    }
+                },
+                Production::Terminal(ch) => {
+                    if let Some(x) = word.chars().nth(0) {
+                        if x == *ch {
+                            matches.push(&word[1..]);
+                        }
+                    }
+                }
+            }
+        }
+        matches
     }
 
     fn check<'a>(&self, id : usize, word : &'a str) -> Option<&'a str> {
@@ -83,5 +113,9 @@ fn main() {
     let (rules, words) = break_pair(content.trim(), "\n\n");
     let mut grammar = Grammar::from(rules);
     let match_count = count_matches(&grammar, words);
-    println!("number of matches for this grammar\n{}", match_count);
+    grammar.productions.insert(8, Production::Nonterminal(vec![vec![42], vec![42, 8]]));
+    grammar.productions.insert(11, Production::Nonterminal(vec![vec![42, 31], vec![42, 11, 31]]));
+    let match_count_cyclic = count_matches(&grammar, words);
+    println!("number of matches for the simple grammar\n{}", match_count);
+    println!("\nnumber of matches for the cyclic grammar\n{}", match_count_cyclic);
 }

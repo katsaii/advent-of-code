@@ -1,2 +1,5 @@
-number of matches for this grammar
+number of matches for the simple grammar
 285
+
+number of matches for the cyclic grammar
+412
