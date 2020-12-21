@@ -7,7 +7,6 @@ fn break_pair<'a>(s : &'a str, pat : &str) -> (&'a str, &'a str) {
     (fst, snd)
 }
 
-#[derive(Debug)]
 enum Production {
     Nonterminal(Vec<Vec<usize>>),
     Terminal(char)
@@ -19,11 +18,10 @@ struct Grammar {
 
 impl Grammar {
     fn matches(&self, word : &str) -> bool {
-        let matches = self.check_2(0, word);
-        matches.iter().any(|x| matches!(*x, ""))
+        self.check(0, word).iter().any(|x| matches!(*x, ""))
     }
 
-    fn check_2<'a>(&self, id : usize, word : &'a str) -> Vec<&'a str> {
+    fn check<'a>(&self, id : usize, word : &'a str) -> Vec<&'a str> {
         let mut matches = Vec::new();
         if let Some(production) = self.productions.get(&id) {
             match production {
@@ -33,7 +31,7 @@ impl Grammar {
                         for id in rule {
                             let mut new_suffixes = Vec::new();
                             for suffix in suffixes {
-                                new_suffixes.extend(self.check_2(*id, suffix));
+                                new_suffixes.extend(self.check(*id, suffix));
                             }
                             suffixes = new_suffixes;
                         }
@@ -50,31 +48,6 @@ impl Grammar {
             }
         }
         matches
-    }
-
-    fn check<'a>(&self, id : usize, word : &'a str) -> Option<&'a str> {
-        match self.productions.get(&id)? {
-            Production::Nonterminal(production) => {
-            'search:
-                for rule in production {
-                    let mut word_slice = word;
-                    for nonterminal in rule {
-                        if let Some(s) = self.check(*nonterminal, word_slice) {
-                            word_slice = s;
-                        } else {
-                            continue 'search;
-                        }
-                    }
-                    return Some(word_slice);
-                }
-            },
-            Production::Terminal(ch) => {
-                if word.chars().nth(0)? == *ch {
-                    return Some(&word[1..]);
-                }
-            }
-        }
-        None
     }
 }
 
@@ -103,9 +76,7 @@ impl From<&str> for Grammar {
 }
 
 fn count_matches(grammar : &Grammar, src : &str) -> usize {
-    src.lines()
-            .filter(|word| grammar.matches(word))
-            .count()
+    src.lines().filter(|word| grammar.matches(word)).count()
 }
 
 fn main() {
