@@ -1,3 +1,27 @@
 ticket scanning error rate of nearby tickets
-71
-["seat", "row", "class"]
+24110
+
+my ticket
+  arrival location: 139
+  class: 113
+  route: 127
+  train: 181
+  arrival platform: 53
+  type: 149
+  departure station: 131
+  departure track: 239
+  row: 137
+  seat: 241
+  arrival track: 89
+  zone: 151
+  departure date: 109
+  departure platform: 73
+  departure time: 157
+  duration: 59
+  price: 107
+  wagon: 83
+  departure location: 173
+  arrival station: 179
+
+product of departure values
+6766503490793

@@ -1,17 +1,4 @@
-data = <<~TICKETS #File.read("in/day_16.txt")
-    class: 1-3 or 5-7
-    row: 6-11 or 33-44
-    seat: 13-40 or 45-50
-
-    your ticket:
-    7,1,14
-
-    nearby tickets:
-    7,3,47
-    40,4,50
-    55,2,20
-    38,6,12
-TICKETS
+data = File.read("in/day_16.txt")
 notes = data.split(/\n\n/)
 fields = { }
 notes[0].scan(/(.+): (\d+)-(\d+) or (\d+)-(\d+)/) do |x|
@@ -53,7 +40,7 @@ valid_tickets = tickets.filter do |ticket|
 end
 valid_tickets.each do |ticket|
     ticket.each_with_index do |value, col|
-        valid_fields = ticket_fields[col].filter do |key|
+        valid_fields = ticket_fields[col] - ticket_fields[col].filter do |key|
             fields[key].any?{|min, max| value >= min and value <= max}
         end
         ticket_fields[col] -= valid_fields
@@ -75,4 +62,13 @@ loop do
     end
 end
 puts "ticket scanning error rate of nearby tickets\n#{ticket_error_rate}"
-puts "#{ticket_fields}"
+puts "\nmy ticket"
+departure_sum = 1
+my_ticket.each_with_index do |value, col|
+    field = ticket_fields[col]
+    puts "  #{field}: #{value}"
+    if field.match(/departure.*/)
+        departure_sum *= value
+    end
+end
+puts "\nproduct of departure values\n#{departure_sum}"
