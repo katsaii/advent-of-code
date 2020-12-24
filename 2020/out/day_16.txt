@@ -1,2 +1,3 @@
 ticket scanning error rate of nearby tickets
-24110
+71
+[["seat"], ["row", "seat"], ["class", "row"]]
