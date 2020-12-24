@@ -59,5 +59,20 @@ valid_tickets.each do |ticket|
         ticket_fields[col] -= valid_fields
     end
 end
+loop do
+    id = ticket_fields.index{|fields| not fields.is_a? String and fields.length == 1}
+    if not id
+        break
+    end
+    field = ticket_fields[id][0]
+    ticket_fields[id] = field
+    ticket_fields.map! do |fields|
+        if fields.is_a? String
+            fields
+        else
+            fields - [field]
+        end
+    end
+end
 puts "ticket scanning error rate of nearby tickets\n#{ticket_error_rate}"
 puts "#{ticket_fields}"
