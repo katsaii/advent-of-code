@@ -36,6 +36,30 @@ impl Cellular for Cell3D {
     }
 }
 
+impl Cellular for Cell4D {
+    fn neighbourhood(&self) -> Vec<Self> {
+        let (x, y, z, w) = *self;
+        let mut neighbourhood = Vec::new();
+        for i in -1..=1 {
+            for j in -1..=1 {
+                for k in -1..=1 {
+                    for l in -1..=1 {
+                        if i == 0 && j == 0 && k == 0 && l == 0 {
+                            continue;
+                        }
+                        neighbourhood.push((x + i, y + j, z + k, w + l));
+                    }
+                }
+            }
+        }
+        neighbourhood
+    }
+
+    fn spawn(x : isize, y : isize) -> Self {
+        (x, y, 0, 0)
+    }
+}
+
 fn next_state<T : Cellular>(culture : Culture<T>) -> Culture<T> {
     let mut new_culture = HashSet::new();
     let mut neighbour_counts = HashMap::new();
@@ -87,7 +111,7 @@ fn load_culture<T : Cellular>(map : &str) -> Culture<T> {
 
 fn main() {
     let content = fs::read_to_string("in/day_17.txt").unwrap();
-    let culture = load_culture::<Cell3D>(&content);
+    let culture = load_culture::<Cell4D>(&content);
     let culture_6 = nth_state(culture, 6);
     println!("{:?}", culture_6.len());
 }
