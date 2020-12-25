@@ -22,12 +22,33 @@ fn cell_neighbourhood((x, y, z) : Cell) -> Vec<Cell> {
 }
 
 fn next_state(culture : Culture) -> Culture {
-    let new_culture = HashSet::new();
-    //let neighbour_counts = HashMap::new();
+    let mut new_culture = HashSet::new();
+    let mut neighbour_counts = HashMap::new();
     for cell in &culture {
-
+        for neighbour in cell_neighbourhood(*cell) {
+            match neighbour_counts.get_mut(&neighbour) {
+                Some(x) => {
+                    *x += 1;
+                },
+                None => {
+                    neighbour_counts.insert(neighbour, 1);
+                }
+            }
+        }
+    }
+    for (cell, count) in neighbour_counts {
+        if culture.contains(&cell) && matches!(count, 2 | 3) || count == 3 {
+            new_culture.insert(cell);
+        }
     }
     new_culture
+}
+
+fn nth_state(mut culture : Culture, n : isize) -> Culture {
+    for _ in 1..=n {
+        culture = next_state(culture);
+    }
+    culture
 }
 
 fn load_culture(map : &str) -> Culture {
@@ -51,5 +72,6 @@ fn load_culture(map : &str) -> Culture {
 fn main() {
     let content = fs::read_to_string("in/day_17.txt").unwrap();
     let culture = load_culture(&content);
-    println!("{:?}", cell_neighbourhood((1, 4, 5)));
+    let culture_6 = nth_state(culture, 6);
+    println!("{:?}", culture_6.len());
 }
