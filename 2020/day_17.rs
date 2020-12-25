@@ -1,31 +1,46 @@
 use std::{
     fs,
-    collections::{ HashMap, HashSet }
+    collections::{ HashMap, HashSet },
+    hash::Hash,
+    cmp::Eq
 };
 
-type Cell = (isize, isize, isize);
-type Culture = HashSet<Cell>;
+type Cell3D = (isize, isize, isize);
+type Cell4D = (isize, isize, isize, isize);
+type Culture<T> = HashSet<T>;
 
-fn cell_neighbourhood((x, y, z) : Cell) -> Vec<Cell> {
-    let mut neighbourhood = Vec::new();
-    for i in -1..=1 {
-        for j in -1..=1 {
-            for k in -1..=1 {
-                if i == 0 && j == 0 && k == 0 {
-                    continue;
-                }
-                neighbourhood.push((x + i, y + j, z + k));
-            }
-        }
-    }
-    neighbourhood
+trait Cellular : Sized + Hash + Eq {
+    fn neighbourhood(&self) -> Vec<Self>;
+    fn spawn(x : isize, y : isize) -> Self;
 }
 
-fn next_state(culture : Culture) -> Culture {
+impl Cellular for Cell3D {
+    fn neighbourhood(&self) -> Vec<Self> {
+        let (x, y, z) = *self;
+        let mut neighbourhood = Vec::new();
+        for i in -1..=1 {
+            for j in -1..=1 {
+                for k in -1..=1 {
+                    if i == 0 && j == 0 && k == 0 {
+                        continue;
+                    }
+                    neighbourhood.push((x + i, y + j, z + k));
+                }
+            }
+        }
+        neighbourhood
+    }
+
+    fn spawn(x : isize, y : isize) -> Self {
+        (x, y, 0)
+    }
+}
+
+fn next_state<T : Cellular>(culture : Culture<T>) -> Culture<T> {
     let mut new_culture = HashSet::new();
     let mut neighbour_counts = HashMap::new();
     for cell in &culture {
-        for neighbour in cell_neighbourhood(*cell) {
+        for neighbour in cell.neighbourhood() {
             match neighbour_counts.get_mut(&neighbour) {
                 Some(x) => {
                     *x += 1;
@@ -44,14 +59,14 @@ fn next_state(culture : Culture) -> Culture {
     new_culture
 }
 
-fn nth_state(mut culture : Culture, n : isize) -> Culture {
+fn nth_state<T : Cellular>(mut culture : Culture<T>, n : isize) -> Culture<T> {
     for _ in 1..=n {
         culture = next_state(culture);
     }
     culture
 }
 
-fn load_culture(map : &str) -> Culture {
+fn load_culture<T : Cellular>(map : &str) -> Culture<T> {
     let mut culture = HashSet::new();
     for (j, line) in map
             .clone()
@@ -62,7 +77,8 @@ fn load_culture(map : &str) -> Culture {
                 .chars()
                 .enumerate() {
             if ch == '#' {
-                culture.insert((i as isize, j as isize, 0));
+                let cell = Cellular::spawn(i as isize, j as isize);
+                culture.insert(cell);
             }
         }
     }
@@ -71,7 +87,7 @@ fn load_culture(map : &str) -> Culture {
 
 fn main() {
     let content = fs::read_to_string("in/day_17.txt").unwrap();
-    let culture = load_culture(&content);
+    let culture = load_culture::<Cell3D>(&content);
     let culture_6 = nth_state(culture, 6);
     println!("{:?}", culture_6.len());
 }
