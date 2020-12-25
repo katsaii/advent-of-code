@@ -49,6 +49,9 @@ all:
 16:
 	@../run.sh day_16.rb
 
+17:
+	@../run.sh day_17.rs
+
 18:
 	@../run.sh day_18.hs
 
