@@ -33,6 +33,11 @@ case $FILEEXT in
 		ghc -o "$BIN" -odir "$BINDIR/o" -hidir "$BINDIR/h" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
+	hx)
+		HAXE_MAIN="$BINDIR/Main.hx"
+		cp "$IN" "$HAXE_MAIN"
+		haxe -p "$BINDIR" --main Main --interp | tee "$OUT"
+		;;
 	js)
 		nodejs "$IN" | tee "$OUT"
 		;;

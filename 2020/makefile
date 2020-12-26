@@ -61,5 +61,8 @@ all:
 21:
 	@../run.sh day_21.rb
 
+22:
+	@../run.sh day_22.hx
+
 %:
 	@echo 'unknown day number'
