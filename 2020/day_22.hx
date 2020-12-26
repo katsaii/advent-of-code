@@ -5,9 +5,11 @@ enum Turn {
 	A; B;
 }
 
+typedef Deck = List<Int>;
+
 class Main {
-	static var playerA = new List<Int>();
-	static var playerB = new List<Int>();
+	static var playerA = new Deck();
+	static var playerB = new Deck();
 	static var turn = Turn.A;
 	static var winner = false;
 
@@ -29,6 +31,16 @@ class Main {
 		}
 	}
 
+	static function deck_score(deck : Deck) : Int {
+		var weight = deck.length;
+		var score = 0;
+		for (card in deck) {
+			score += weight * card;
+			weight -= 1;
+		}
+		return score;
+	}
+
 	static function main() : Void {
 		playerA.add(9);
 		playerA.add(2);
@@ -44,9 +56,8 @@ class Main {
 			play_turn();
 		}
 		var winner_name = "player " + (turn == Turn.A ? "1" : "2");
+		var winner_deck = turn == Turn.A ? playerA : playerB;
 		Sys.println(winner_name + " is the winner");
-		for (item in playerB) {
-			Sys.println(item);
-		}
+		Sys.println(deck_score(winner_deck));
 	}
 }
