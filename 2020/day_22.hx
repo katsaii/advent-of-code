@@ -1,5 +1,5 @@
 class Main {
-	static public function main() : Void {
-		trace("hello world");
+	static function main() : Void {
+		Sys.println("hello world");
 	}
 }

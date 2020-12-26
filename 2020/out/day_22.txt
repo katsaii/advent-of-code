@@ -1,1 +1,1 @@
-./bin/Main.hx:3: hello world
+hello world

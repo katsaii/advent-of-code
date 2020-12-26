@@ -35,8 +35,10 @@ case $FILEEXT in
 		;;
 	hx)
 		HAXE_MAIN="$BINDIR/Main.hx"
+		HAXE_TARGET="$BINDIR/$FILENAME.py"
 		cp "$IN" "$HAXE_MAIN"
-		haxe -p "$BINDIR" --main Main --interp | tee "$OUT"
+		haxe -p "$BINDIR" --python "$HAXE_TARGET" --main Main
+		python3 "$HAXE_TARGET" | tee "$OUT"
 		;;
 	js)
 		nodejs "$IN" | tee "$OUT"
