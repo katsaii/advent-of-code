@@ -9,16 +9,14 @@ typedef Deck = List<Int>;
 class Main {
 	static var playerA = new Deck();
 	static var playerB = new Deck();
-	static var turn = Turn.A;
-	static var winner = false;
+	static var seenCombosA = new Map<Deck, Bool>();
+	static var seenCombosB = new Map<Deck, Bool>();
 
-	static function playTurn() : Void {
+	static function playTurn(turn : Turn) : Turn {
 		if (playerA.length == 0) {
-			turn = Turn.B;
-			winner = true;
+			return Turn.B;
 		} else if (playerB.length == 0) {
-			turn = Turn.A;
-			winner = true;
+			return Turn.A;
 		} else {
 			var playA = playerA.pop();
 			var playB = playerB.pop();
@@ -29,7 +27,12 @@ class Main {
 				playerB.add(playB);
 				playerB.add(playA);
 			}
-			turn = turn == Turn.A ? Turn.B : Turn.A;
+			return playTurn(turn == Turn.A ? Turn.B : Turn.A);
+		}
+	}
+
+	static function playTurnRecursive() : Void {
+		if (seenCombosA.exists(playerA) && seenCombosB.exists(playerB)) {
 		}
 	}
 
@@ -55,11 +58,9 @@ class Main {
 		for (card in players[1]) {
 			playerB.add(card);
 		}
-		while (!winner) {
-			playTurn();
-		}
-		var winnerName = "player " + (turn == Turn.A ? "1" : "2");
-		var winnerDeck = turn == Turn.A ? playerA : playerB;
+		var winner = playTurn(Turn.A);
+		var winnerName = "player " + (winner == Turn.A ? "1" : "2");
+		var winnerDeck = winner == Turn.A ? playerA : playerB;
 		Sys.println(winnerName + " is the winner");
 		Sys.println(deckScore(winnerDeck));
 	}
