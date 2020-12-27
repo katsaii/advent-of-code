@@ -1,2 +1,5 @@
-player 1 is the winner
+player 1 is the combat winner
 33680
+
+player 1 is the recursive combat winner
+33683
