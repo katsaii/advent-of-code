@@ -29,6 +29,12 @@ case $FILEEXT in
 		clang++ -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
+	go)
+		GO_OBJ="$BINDIR/o/$FILENAME.o"
+		go tool compile -o "$GO_OBJ" "$IN"
+		go tool link -o "$BIN" "$GO_OBJ"
+		"$BIN" | tee "$OUT"
+		;;
 	hs)
 		ghc -o "$BIN" -odir "$BINDIR/o" -hidir "$BINDIR/h" "$IN"
 		"$BIN" | tee "$OUT"
