@@ -93,9 +93,9 @@ func main() {
 			tiles[pos] = true
 		}
 	}
-	fmt.Printf("%d\n", len(tiles))
+	fmt.Printf("the number of black tiles in the room\n%d\n", len(tiles))
 	for i := 0; i < 100; i += 1 {
 		mutate_tiles(&tiles)
-		fmt.Printf("%d\n", len(tiles))
 	}
+	fmt.Printf("\nthe number of black tiles in the room after 100 days\n%d\n", len(tiles))
 }
