@@ -1,3 +1,14 @@
+from functools import reduce
+
+def shift_cups(cups):
+    return cups[1:] + cups[:1]
+
+def encode_cups(cups):
+    while cups[0] != 1:
+        cups = shift_cups(cups)
+    cups = shift_cups(cups)
+    return reduce(lambda acc, n: acc + str(n), cups[:-1], "")
+
 def make_move(cups, dist=3):
     cup_max = max(cups)
     cup_min = min(cups)
@@ -19,6 +30,6 @@ def make_move(cups, dist=3):
         return left + head + right + [current]
 
 cups = [int(x) for x in open("in/day_23.txt").read() if not x.isspace()]
-for _ in range(0, 10):
+for _ in range(0, 100):
     cups = make_move(cups)
-print(cups)
+print(encode_cups(cups))
