@@ -1,5 +1,38 @@
 from functools import reduce
 
+class CupNode:
+    def __init__(self, label):
+        self.label = label
+        self.pred = None
+        self.succ = None
+
+class CupList:
+    def __init__(self, cups):
+        self.length = len(cups)
+        self.max_cup = max(cups)
+        self.min_cup = min(cups)
+        self.lookup = { x : CupNode(x) for x in cups }
+        self.current = self.lookup[cups[0]]
+        for i in range(0, self.length):
+            node = self.lookup[cups[i]]
+            pred = self.lookup[cups[(i - 1) % self.length]]
+            succ = self.lookup[cups[(i + 1) % self.length]]
+            node.pred = pred
+            node.succ = succ
+
+    def shift_until(self, label):
+        while self.current.label != label:
+            self.current = self.current.pred
+
+    def encode(self):
+        start = self.current
+        end = start.succ
+        out = ""
+        while end != start:
+            out += str(end.label)
+            end = end.succ
+        return out
+
 def shift_cups(cups):
     return cups[1:] + cups[:1]
 
@@ -30,6 +63,14 @@ def make_move(cups, dist=3):
         return left + head + right + [current]
 
 cups = [int(x) for x in open("in/day_23.txt").read() if not x.isspace()]
-for _ in range(0, 100):
-    cups = make_move(cups)
-print(encode_cups(cups))
+cup_list = CupList(cups)
+cup_list.shift_until(1)
+print(cup_list.encode())
+
+#basic_cups = cups
+#for _ in range(0, 100):
+#    basic_cups = make_move(basic_cups)
+#complex_cups = cups + list(range(max(cups), 1000001))
+#for _ in range(0, 10000000):
+#    complex_cups = make_move(complex_cups)
+#print(encode_cups(cups))
