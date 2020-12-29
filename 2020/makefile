@@ -64,6 +64,9 @@ all:
 22:
 	@../run.sh day_22.hx
 
+23:
+	@../run.sh day_23.py
+
 24:
 	@../run.sh day_24.go
 
