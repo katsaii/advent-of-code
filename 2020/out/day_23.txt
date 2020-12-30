@@ -1,4 +1,5 @@
+cup labels after 100 moves
 24853197
-776819
-855595
+
+cups with labels 776819 and 855595 contain the stars
 664642452305

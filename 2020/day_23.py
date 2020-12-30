@@ -63,7 +63,5 @@ for i in range(0, 10000000):
 base = large_cup_list.find(1)
 star_a = base.succ.label
 star_b = base.succ.succ.label
-print(cup_labels)
-print(star_a)
-print(star_b)
-print(star_a * star_b)
+print("cup labels after 100 moves\n%s" % cup_labels)
+print("\ncups with labels %d and %d contain the stars\n%d" % (star_a, star_b, star_a * star_b))
