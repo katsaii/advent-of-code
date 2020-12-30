@@ -1,5 +1,3 @@
-from functools import reduce
-
 class CupNode:
     def __init__(self, label):
         self.label = label
@@ -20,9 +18,30 @@ class CupList:
             node.pred = pred
             node.succ = succ
 
+    def find(self, label):
+        return self.lookup[label]
+
     def shift_until(self, label):
         while self.current.label != label:
             self.current = self.current.pred
+
+    def make_move(self):
+        current_label = self.current.label
+        dest_label = current_label
+        pred = self.current
+        a = self.current.succ
+        b = a.succ
+        c = b.succ
+        self.current = c.succ
+        self.current.pred = pred
+        pred.succ = self.current
+        while True:
+            dest_label = self.max_cup if dest_label == self.min_cup else dest_label - 1
+            if not dest_label in { a.label, b.label, c.label }:
+                break
+        dest = self.lookup[dest_label]
+        c.succ = dest.succ
+        dest.succ = a
 
     def encode(self):
         start = self.current
@@ -33,44 +52,18 @@ class CupList:
             end = end.succ
         return out
 
-def shift_cups(cups):
-    return cups[1:] + cups[:1]
-
-def encode_cups(cups):
-    while cups[0] != 1:
-        cups = shift_cups(cups)
-    cups = shift_cups(cups)
-    return reduce(lambda acc, n: acc + str(n), cups[:-1], "")
-
-def make_move(cups, dist=3):
-    cup_max = max(cups)
-    cup_min = min(cups)
-    current = cups[0]
-    head = cups[1:dist + 1]
-    tail = cups[dist + 1:]
-    dest = current
-    while True:
-        dest = cup_max if dest == cup_min else dest - 1
-        if dest == current or dest in tail:
-            break
-    if dest == current:
-        # no change
-        return cups
-    else:
-        pos = tail.index(dest)
-        left = tail[0:pos + 1]
-        right = tail[pos + 1:]
-        return left + head + right + [current]
-
 cups = [int(x) for x in open("in/day_23.txt").read() if not x.isspace()]
 cup_list = CupList(cups)
-cup_list.shift_until(1)
-print(cup_list.encode())
-
-#basic_cups = cups
-#for _ in range(0, 100):
-#    basic_cups = make_move(basic_cups)
-#complex_cups = cups + list(range(max(cups), 1000001))
-#for _ in range(0, 10000000):
-#    complex_cups = make_move(complex_cups)
-#print(encode_cups(cups))
+for _ in range(0, 100):
+    cup_list.make_move()
+cup_labels = cup_list.encode()
+large_cup_list = CupList(cups + list(range(max(cups) + 1, 1000001)))
+for i in range(0, 10000000):
+    large_cup_list.make_move()
+base = large_cup_list.find(1)
+star_a = base.succ.label
+star_b = base.succ.succ.label
+print(cup_labels)
+print(star_a)
+print(star_b)
+print(star_a * star_b)
