@@ -1,4 +1,21 @@
 #!/bin/bash
+
+function check_commands_exist {
+	MISSING=''
+	for ARG in "$@"; do
+		if ! command -v "$ARG" &> /dev/null; then
+			echo "missing command: $ARG"
+			MISSING=1
+		fi
+	done
+	if [[ "$MISSING" ]]; then
+		if [[ -n "$NOTE" ]]; then
+			echo "$NOTE"
+		fi
+		exit
+	fi
+}
+
 FILEPATH="$1"
 FILEEXT="${FILEPATH#*.}"
 FILENAME="`basename "$FILEPATH" ".$FILEEXT"`"
