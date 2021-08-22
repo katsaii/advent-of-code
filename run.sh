@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function check_commands_exist {
+function requires_command {
 	MISSING=''
 	for ARG in "$@"; do
 		if ! command -v "$ARG" &> /dev/null; then
@@ -10,7 +10,7 @@ function check_commands_exist {
 	done
 	if [[ "$MISSING" ]]; then
 		if [[ -n "$NOTE" ]]; then
-			echo "$NOTE"
+			echo "note: $NOTE"
 		fi
 		exit
 	fi
@@ -39,24 +39,33 @@ BIN="$BINDIR/$FILENAME.out"
 OUT="$OUTDIR/$FILENAME.txt"
 case $FILEEXT in
 	c)
+		requires_command clang
 		clang -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
 	cpp)
+		requires_command clang++
 		clang++ -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
+	erl)
+		requires_command erl
+		echo "not supported"
+		;;
 	go)
+		requires_command go
 		GO_OBJ="$BINDIR/o/$FILENAME.o"
 		go tool compile -o "$GO_OBJ" "$IN"
 		go tool link -o "$BIN" "$GO_OBJ"
 		"$BIN" | tee "$OUT"
 		;;
 	hs)
+		requires_command ghc
 		ghc -o "$BIN" -odir "$BINDIR/o" -hidir "$BINDIR/h" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
 	hx)
+		requires_command haxe python3
 		HAXE_MAIN="$BINDIR/Main.hx"
 		HAXE_TARGET="$BINDIR/$FILENAME.py"
 		cp "$IN" "$HAXE_MAIN"
@@ -64,24 +73,46 @@ case $FILEEXT in
 		python3 "$HAXE_TARGET" | tee "$OUT"
 		;;
 	js)
-		nodejs "$IN" | tee "$OUT"
+		requires_command node
+		node "$IN" | tee "$OUT"
+		;;
+	kats)
+		NOTE="KatScript can be installed at https://github.com/NuxiiGit/katscript-lang" requires_command katscript
+		katscript "$IN" | tee "$OUT"
 		;;
 	lua)
+		requires_command lua
 		lua "$IN" | tee "$OUT"
 		;;
+	ml)
+		requires_command ocamlc
+		echo "not supported"
+		;;
+	nim)
+		requires_command nim
+		echo "not supported"
+		;;
 	pl)
+		requires_command swipl
 		swipl -o "$BIN" -g main -c "$IN" 2> /dev/null
 		"$BIN" | tee "$OUT"
 		;;
 	py)
+		requires_command python3
 		python3 "$IN" | tee "$OUT"
 		;;
 	rb)
+		requires_command ruby
 		ruby "$IN" | tee "$OUT"
 		;;
 	rs)
+		requires_command rustc
 		rustc -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
+		;;
+	zig)
+		requires_command zig
+		echo "not supported"
 		;;
 	*)
 		echo "unknown file extension .$FILEEXT"
