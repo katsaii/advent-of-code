@@ -20,12 +20,18 @@ FILEPATH="$1"
 FILEEXT="${FILEPATH#*.}"
 FILENAME="`basename "$FILEPATH" ".$FILEEXT"`"
 FILEDIR="`dirname "$FILEPATH"`"
+IN="./$FILENAME.$FILEEXT"
 if [ "$FILEDIR" = "/" ]; then
 	echo 'nice try!'
-	exit 1
+	exit
 fi
 (
 cd "$FILEDIR"
+IN="./$FILENAME.$FILEEXT"
+if [ ! -e "$IN" ]; then
+	echo "a file does not exist at the path '$IN' relative to the directory '$FILEDIR'"
+	exit
+fi
 BINDIR="./bin"
 OUTDIR="./out"
 if [ ! -d "$BINDIR" ]; then
@@ -34,7 +40,6 @@ fi
 if [ ! -d "$OUTDIR" ]; then
 	mkdir "$OUTDIR"
 fi
-IN="./$FILENAME.$FILEEXT"
 BIN="$BINDIR/$FILENAME.out"
 OUT="$OUTDIR/$FILENAME.txt"
 case $FILEEXT in
