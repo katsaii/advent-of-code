@@ -47,14 +47,14 @@ valid_tickets.each do |ticket|
     end
 end
 loop do
-    id = ticket_fields.index{|fields| not fields.is_a? String and fields.length == 1}
+    id = ticket_fields.index{|fields| not fields.is_a?(String) and fields.length == 1}
     if not id
         break
     end
     field = ticket_fields[id][0]
     ticket_fields[id] = field
     ticket_fields.map! do |fields|
-        if fields.is_a? String
+        if fields.is_a?(String)
             fields
         else
             fields - [field]
