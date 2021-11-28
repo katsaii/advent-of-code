@@ -48,6 +48,10 @@ case $FILEEXT in
 		clang -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
+	ck)
+		NOTE="Chuck can be installed at https://chuck.stanford.edu/release/" requires_command chuck
+		chuck "$IN" | tee "$OUT"
+		;;
 	cpp)
 		requires_command clang++
 		clang++ -o "$BIN" "$IN"
@@ -115,6 +119,8 @@ case $FILEEXT in
 		rustc -o "$BIN" "$IN"
 		"$BIN" | tee "$OUT"
 		;;
+	sh)
+		"$IN" | tee "$OUT"
 	zig)
 		requires_command zig
 		echo "not supported"
