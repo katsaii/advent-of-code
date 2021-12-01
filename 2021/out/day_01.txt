@@ -1,0 +1,5 @@
+depth increase count
+1529
+
+depth increase count for window of size 3
+1567
