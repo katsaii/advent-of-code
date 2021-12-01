@@ -121,6 +121,7 @@ case $FILEEXT in
 		;;
 	sh)
 		"$IN" | tee "$OUT"
+		;;
 	zig)
 		requires_command zig
 		echo "not supported"
