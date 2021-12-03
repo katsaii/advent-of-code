@@ -7,5 +7,8 @@ all:
 2:
 	@../run.sh day_02.sh
 
+3:
+	@../run.sh day_03.pl
+
 %:
 	@echo 'unknown day number'

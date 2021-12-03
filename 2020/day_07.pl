@@ -65,7 +65,7 @@ bag_descendent_count((Count, Modifier, Colour), N) :-
 	foldl(plus, Counts, 1, M),
 	N is Count * M.
 
-main :-
+main(_) :-
 	read_lines("in/day_07.txt", Lines),
 	maplist(parse_rule, Lines, Rules),
 	assert_rules(Rules),
@@ -76,5 +76,4 @@ main :-
 	write(ContainsGoldShinyLength), nl,
 	bag_descendent_count("shiny", "gold", ShinyGoldCapacity),
 	nl, write("the number of individual bags required inside a gold shiny bag"), nl,
-	write(ShinyGoldCapacity), nl,
-	halt.
+	write(ShinyGoldCapacity), nl.

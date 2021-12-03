@@ -103,7 +103,7 @@ nim)
 	;;
 pl)
 	requires-command swipl
-	swipl -o "$bin" -g main -c "$in" 2> /dev/null
+	swipl -o "$bin" -g main -t halt -c "$in" 2> /dev/null
 	"$bin" | tee "$out"
 	;;
 py)
