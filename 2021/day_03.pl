@@ -32,40 +32,33 @@ bits_to_number_([X | Xs], OutN, OutUnit) :-
 	OutN is N + Unit * X,
 	OutUnit is 2 * Unit.
 
-match_length([X | Xs], [Y | Ys], N) :-
-	X = Y,
-	match_length(Xs, Ys, M),
-	N is M + 1.
-match_length(_, _, 0).
+fst([X | _], X).
+fst_eq(Expect, [X | _]) :- Expect = X.
 
-choose_best(A, Aw, _, Bw, A, Aw) :- Aw > Bw.
-choose_best(_, _, B, Bw, B, Bw).
+tail([_ | Xs], Xs).
 
-find_best_match(Criteria, Samples, BestMatch) :-
-	find_best_match_(Criteria, Samples, [], 0, BestMatch).
+filter_match(Samples, Match) :-
+	filter_match_(Samples, [], Match).
 
-find_best_match_(_, [], BestMatch, _, BestMatch).
-find_best_match_(Criteria, [X | Xs], PrevMatch, PrevWeight, BestMatch) :-
-	match_length(Criteria, X, NewWeight),
-	choose_best(PrevMatch, PrevWeight, X, NewWeight, NewBestMatch, NewBestWeight),
-	find_best_match_(Criteria, Xs, NewBestMatch, NewBestWeight, BestMatch).
+filter_match_([], Prefix, Prefix).
+filter_match_([X | []], Prefix, Match) :- append(Prefix, X, Match).
+filter_match_(Xs, Prefix, Match) :-
+	maplist(fst, Xs, Samples),
+	majority_sample(Samples, Major),
+	include(fst_eq(Major), Xs, FilteredXs),
+	maplist(tail, FilteredXs, NextSamples),
+	append(Prefix, [Major], NextPrefix),
+	filter_match_(NextSamples, NextPrefix, Match).
 
 main(_) :-
 	read_samples("./in/day_03.txt", Rows),
 	transpose(Rows, Columns),
 	maplist(majority_sample, Columns, GammaRateBits),
 	maplist(flip_bit, GammaRateBits, EpsilonRateBits),
-	find_best_match(GammaRateBits, Rows, O2RatingBits),
-	find_best_match(EpsilonRateBits, Rows, CO2RatingBits),
 	bits_to_number(GammaRateBits, GammaRate),
 	bits_to_number(EpsilonRateBits, EpsilonRate),
-	bits_to_number(O2RatingBits, O2Rating),
-	bits_to_number(CO2RatingBits, CO2Rating),
 	PowerConsumption is GammaRate * EpsilonRate,
-	LifeSupportRating is O2Rating * CO2Rating,
+	filter_match(Rows, Match),
+	write(Match), nl,
 	write("power consumption of the submarine"), nl,
-	write(PowerConsumption), nl, nl,
-	write(O2RatingBits), nl,
-	write(CO2RatingBits), nl,
-	write("life support rating"), nl,
-	write(LifeSupportRating), nl.
+	write(PowerConsumption), nl.
