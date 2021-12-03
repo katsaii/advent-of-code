@@ -4,7 +4,7 @@ y=0
 aim=0
 
 function parse-instruction {
-	case "$1" in
+	case $1 in
 	forward)
 		x=$((x + $2))
 		y=$((y + $2 * aim))

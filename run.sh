@@ -1,134 +1,134 @@
 #!/bin/bash
 
-function requires_command {
-	MISSING=''
-	for ARG in "$@"; do
-		if ! command -v "$ARG" &> /dev/null; then
-			echo "missing command: $ARG"
-			MISSING=1
+function requires-command {
+	missing=''
+	for arg in "$@"; do
+		if ! command -v "$arg" &> /dev/null; then
+			echo "missing command: $arg"
+			missing=1
 		fi
 	done
-	if [[ "$MISSING" ]]; then
-		if [[ -n "$NOTE" ]]; then
-			echo "note: $NOTE"
+	if [[ "$missing" ]]; then
+		if [[ -n "$note" ]]; then
+			echo "note: $note"
 		fi
 		exit
 	fi
 }
 
-FILEPATH="$1"
-FILEEXT="${FILEPATH#*.}"
-FILENAME="`basename "$FILEPATH" ".$FILEEXT"`"
-FILEDIR="`dirname "$FILEPATH"`"
-IN="./$FILENAME.$FILEEXT"
-if [ "$FILEDIR" = "/" ]; then
+filePath="$1"
+fileExt="${filePath#*.}"
+fileName="`basename "$filePath" ".$fileExt"`"
+fileDir="`dirname "$filePath"`"
+in="./$fileName.$fileExt"
+if [ "$fileDir" = "/" ]; then
 	echo 'nice try!'
 	exit
 fi
 (
-cd "$FILEDIR"
-IN="./$FILENAME.$FILEEXT"
-if [ ! -e "$IN" ]; then
-	echo "a file does not exist at the path '$IN' relative to the directory '$FILEDIR'"
+cd "$fileDir"
+in="./$fileName.$fileExt"
+if [ ! -e "$in" ]; then
+	echo "a file does not exist at the path '$in' relative to the directory '$fileDir'"
 	exit
 fi
-BINDIR="./bin"
-OUTDIR="./out"
-if [ ! -d "$BINDIR" ]; then
-	mkdir "$BINDIR"
+binDir="./bin"
+outDir="./out"
+if [ ! -d "$binDir" ]; then
+	mkdir "$binDir"
 fi
-if [ ! -d "$OUTDIR" ]; then
-	mkdir "$OUTDIR"
+if [ ! -d "$outDir" ]; then
+	mkdir "$outDir"
 fi
-BIN="$BINDIR/$FILENAME.out"
-OUT="$OUTDIR/$FILENAME.txt"
-case $FILEEXT in
+bin="$binDir/$fileName.out"
+out="$outDir/$fileName.txt"
+case $fileExt in
 c)
-	requires_command clang
-	clang -o "$BIN" "$IN"
-	"$BIN" | tee "$OUT"
+	requires-command clang
+	clang -o "$bin" "$in"
+	"$bin" | tee "$out"
 	;;
 ck)
-	NOTE="Chuck can be installed at https://chuck.stanford.edu/release/" requires_command chuck
-	chuck "$IN" | tee "$OUT"
+	note="Chuck can be installed at https://chuck.stanford.edu/release/" requires-command chuck
+	chuck "$in" | tee "$out"
 	;;
 cpp)
-	requires_command clang++
-	clang++ -o "$BIN" "$IN"
-	"$BIN" | tee "$OUT"
+	requires-command clang++
+	clang++ -o "$bin" "$in"
+	"$bin" | tee "$out"
 	;;
 erl)
-	requires_command erl
+	requires-command erl
 	echo "not supported"
 	;;
 go)
-	requires_command go
-	GO_OBJ="$BINDIR/o/$FILENAME.o"
-	go tool compile -o "$GO_OBJ" "$IN"
-	go tool link -o "$BIN" "$GO_OBJ"
-	"$BIN" | tee "$OUT"
+	requires-command go
+	goObj="$binDir/o/$fileName.o"
+	go tool compile -o "$goObj" "$in"
+	go tool link -o "$bin" "$goObj"
+	"$bin" | tee "$out"
 	;;
 hs)
-	requires_command ghc
-	ghc -o "$BIN" -odir "$BINDIR/o" -hidir "$BINDIR/h" "$IN"
-	"$BIN" | tee "$OUT"
+	requires-command ghc
+	ghc -o "$bin" -odir "$binDir/o" -hidir "$binDir/h" "$in"
+	"$bin" | tee "$out"
 	;;
 hx)
-	requires_command haxe python3
-	HAXE_MAIN="$BINDIR/Main.hx"
-	HAXE_TARGET="$BINDIR/$FILENAME.py"
-	cp "$IN" "$HAXE_MAIN"
-	haxe -p "$BINDIR" --python "$HAXE_TARGET" --main Main
-	python3 "$HAXE_TARGET" | tee "$OUT"
+	requires-command haxe python3
+	haxeMain="$binDir/Main.hx"
+	haxeTarget="$binDir/$fileName.py"
+	cp "$in" "$haxeMain"
+	haxe -p "$binDir" --python "$haxeTarget" --main Main
+	python3 "$haxeTarget" | tee "$out"
 	;;
 js)
-	requires_command node
-	node "$IN" | tee "$OUT"
+	requires-command node
+	node "$in" | tee "$out"
 	;;
 kats)
-	NOTE="KatScript can be installed at https://github.com/NuxiiGit/katscript-lang" requires_command katscript
-	katscript "$IN" | tee "$OUT"
+	note="KatScript can be installed at https://github.com/NuxiiGit/katscript-lang" requires-command katscript
+	katscript "$in" | tee "$out"
 	;;
 lua)
-	requires_command lua
-	lua "$IN" | tee "$OUT"
+	requires-command lua
+	lua "$in" | tee "$out"
 	;;
 ml)
-	requires_command ocamlc
+	requires-command ocamlc
 	echo "not supported"
 	;;
 nim)
-	requires_command nim
+	requires-command nim
 	echo "not supported"
 	;;
 pl)
-	requires_command swipl
-	swipl -o "$BIN" -g main -c "$IN" 2> /dev/null
-	"$BIN" | tee "$OUT"
+	requires-command swipl
+	swipl -o "$bin" -g main -c "$in" 2> /dev/null
+	"$bin" | tee "$out"
 	;;
 py)
-	requires_command python3
-	python3 "$IN" | tee "$OUT"
+	requires-command python3
+	python3 "$in" | tee "$out"
 	;;
 rb)
-	requires_command ruby
-	ruby "$IN" | tee "$OUT"
+	requires-command ruby
+	ruby "$in" | tee "$out"
 	;;
 rs)
-	requires_command rustc
-	rustc -o "$BIN" "$IN"
-	"$BIN" | tee "$OUT"
+	requires-command rustc
+	rustc -o "$bin" "$in"
+	"$bin" | tee "$out"
 	;;
 sh)
-	chmod +x "$IN"
-	"$IN" | tee "$OUT"
+	chmod +x "$in"
+	"$in" | tee "$out"
 	;;
 zig)
-	requires_command zig
+	requires-command zig
 	echo "not supported"
 	;;
 *)
-	echo "unknown file extension .$FILEEXT"
+	echo "unknown file extension .$fileExt"
 	;;
 esac
 )
