@@ -1,3 +1,5 @@
-[1,0,1,1,1]
 power consumption of the submarine
-198
+3687446
+
+life support rating of the submarine
+4406844
