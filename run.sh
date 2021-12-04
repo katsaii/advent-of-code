@@ -63,6 +63,9 @@ erl)
 	;;
 go)
 	requires-command go
+	if [ ! -d "$binDir/o" ]; then
+		mkdir "$binDir/o"
+	fi
 	goObj="$binDir/o/$fileName.o"
 	go tool compile -o "$goObj" "$in"
 	go tool link -o "$bin" "$goObj"
@@ -70,6 +73,12 @@ go)
 	;;
 hs)
 	requires-command ghc
+	if [ ! -d "$binDir/o" ]; then
+		mkdir "$binDir/o"
+	fi
+	if [ ! -d "$binDir/h" ]; then
+		mkdir "$binDir/h"
+	fi
 	ghc -o "$bin" -odir "$binDir/o" -hidir "$binDir/h" "$in"
 	"$bin" | tee "$out"
 	;;
