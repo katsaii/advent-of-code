@@ -1,6 +1,5 @@
-hi
-hello
+winning card score
+31424
 
-
-yo
-hi
+losing card score
+23042
