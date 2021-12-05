@@ -1,0 +1,5 @@
+sum of votes greater than 2 for axis-aligned points
+6311
+
+sum of votes greater than 2 for axis-aligned and diagonal points
+19929

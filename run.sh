@@ -90,6 +90,10 @@ hx)
 	haxe -p "$binDir" --python "$haxeTarget" --main Main
 	python3 "$haxeTarget" | tee "$out"
 	;;
+jl)
+	requires-command julia
+	julia "$in" | tee "$out"
+	;;
 js)
 	requires-command node
 	node "$in" | tee "$out"

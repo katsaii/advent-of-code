@@ -13,5 +13,8 @@ all:
 4:
 	@../run.sh day_04.go
 
+5:
+	@../run.sh day_05.jl
+
 %:
 	@echo 'unknown day number'
