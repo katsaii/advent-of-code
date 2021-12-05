@@ -16,9 +16,9 @@ out << "\n\n| Language | Count | Tally |\n| --- | --- | --- |"
 langs_tally.each do |lang, n|
     urls = ""
     solutions[lang].each do |solution|
-        urls << "[`#`](#{solution})"
+        urls << "<a href=\"#{solution}\">#</a>"
     end
-    out << "\n| #{lang} | #{n} | #{urls} |"
+    out << "\n| #{lang} | #{n} | <code>#{urls}</code> |"
 end
 out << "\n"
 File.write("languages.md", out)
