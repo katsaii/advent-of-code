@@ -11,6 +11,7 @@ A table of programming languages used during the events, and how many solutions 
 | Go         | 2 `##`    |
 | Prolog     | 2 `##`    |
 | C          | 2 `##`    |
+| Julia      | 1 `#`     |
 | Shell      | 1 `#`     |
 | ChucK      | 1 `#`     |
 | Haxe       | 1 `#`     |
