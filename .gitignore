@@ -1,4 +1,5 @@
 bin/
+zig-cache/
 *.exe
 *.out
 *.o

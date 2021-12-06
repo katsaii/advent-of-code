@@ -138,7 +138,8 @@ sh)
 	;;
 zig)
 	requires-command zig
-	echo "not supported"
+	zig build-exe "$in" -femit-bin="$bin"
+	"$bin" |& tee "$out"
 	;;
 *)
 	echo "unknown file extension .$fileExt"
