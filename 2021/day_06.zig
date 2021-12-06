@@ -18,7 +18,7 @@ pub fn main() anyerror!void {
     var file = try dir.openFile("in/day_06.txt", .{ });
     var reader = file.reader();
     defer file.close();
-    var buff: [2048]u8 = undefined;
+    var buff : [2048]u8 = undefined;
     var length = try file.readAll(&buff);
     var splits = std.mem.tokenize(buff[0..length], ",\n");
     var initialState = [9]usize { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
