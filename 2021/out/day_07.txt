@@ -1,0 +1,2 @@
+minimum cost to align crabs to position 329
+340052
