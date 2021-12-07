@@ -1,2 +1,5 @@
 minimum cost to align crabs to position 329
 340052
+
+minimum cost to align crabs to position 466 using expensive fuel
+92948968

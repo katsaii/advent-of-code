@@ -8,10 +8,10 @@ A table of programming languages used during the events, and how many solutions 
 | Python | 4 | <code><a href="../2020/day_05.py">#</a><a href="../2020/day_09.py">#</a><a href="../2020/day_10.py">#</a><a href="../2020/day_23.py">#</a></code> |
 | Ruby | 4 | <code><a href="../2020/day_02.rb">#</a><a href="../2020/day_14.rb">#</a><a href="../2020/day_16.rb">#</a><a href="../2020/day_21.rb">#</a></code> |
 | Haskell | 4 | <code><a href="../2019/day_01.hs">#</a><a href="../2020/day_04.hs">#</a><a href="../2020/day_06.hs">#</a><a href="../2020/day_18.hs">#</a></code> |
+| C | 3 | <code><a href="../2020/day_03.c">#</a><a href="../2020/day_12.c">#</a><a href="../2021/day_07.c">#</a></code> |
 | Go | 2 | <code><a href="../2020/day_24.go">#</a><a href="../2021/day_04.go">#</a></code> |
 | Prolog | 2 | <code><a href="../2020/day_07.pl">#</a><a href="../2021/day_03.pl">#</a></code> |
-| C | 2 | <code><a href="../2020/day_03.c">#</a><a href="../2020/day_12.c">#</a></code> |
-| Zig | 1 | <code><a href="../2021/day_05.zig">#</a></code> |
+| Zig | 1 | <code><a href="../2021/day_06.zig">#</a></code> |
 | Julia | 1 | <code><a href="../2021/day_05.jl">#</a></code> |
 | Shell | 1 | <code><a href="../2021/day_02.sh">#</a></code> |
 | ChucK | 1 | <code><a href="../2021/day_01.ck">#</a></code> |
