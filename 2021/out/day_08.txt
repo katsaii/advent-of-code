@@ -1,1 +1,2 @@
-[[["be", "cfbegad", "cbdgef", "fgaecd", "cgeb", "fdcge", "agebfd", "fecdb", "fabcd", "edb"], ["fdgacbe", "cefdb", "cefbgd", "gcbe"]]]
+number of times the digits 1, 4, 7, and 8 appear
+352
