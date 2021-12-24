@@ -1,3 +1,5 @@
-{"a"=>["c", "f"], "b"=>["c", "f"], "c"=>["a", "b", "c", "d", "e", "f", "g"], "d"=>["a", "c", "f"], "e"=>["b", "c", "d", "f"], "f"=>["b", "c", "d", "f"], "g"=>["a", "b", "c", "d", "e", "f", "g"]}
 number of times the digits 1, 4, 7, and 8 appear
-0
+352
+
+sum of output values for the display
+936117
