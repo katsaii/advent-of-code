@@ -24,12 +24,12 @@ notes.each do |signals, output|
         end
     end
     digits = digits.map{|candidates| candidates.length == 1 ? candidates[0] : candidates}
-    digits[3] = digits[3].find{|candidate| (digits[1] - candidate).empty?}
-    digits[9] = digits[9].find{|candidate| ((digits[3] | digits[4]) - candidate).empty?}
-    digits[6] = digits[6].find{|candidate| (candidate - digits[7]).length == 4}
-    digits[0] = digits[0].find{|candidate| candidate != digits[6] && candidate != digits[9]}
     digits[2] = digits[2].find{|candidate| (candidate - digits[4]).length == 3}
+    digits[3] = digits[3].find{|candidate| (digits[1] - candidate).empty?}
     digits[5] = digits[5].find{|candidate| candidate != digits[2] && candidate != digits[3]}
+    digits[6] = digits[6].find{|candidate| (candidate - digits[7]).length == 4}
+    digits[9] = digits[9].find{|candidate| ((digits[3] | digits[4]) - candidate).empty?}
+    digits[0] = digits[0].find{|candidate| candidate != digits[6] && candidate != digits[9]}
     digits = digits.map{|digit| digit.sort}
     output_value = 0
     output_unit = 1000
