@@ -1,2 +1,5 @@
 sum of risk levels of low points in the heightmap
 575
+
+product of the three largest basins (103 * 100 * 99)
+1019700
