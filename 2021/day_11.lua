@@ -7,7 +7,10 @@ for line in io.lines("in/day_11.txt") do
 	dumbos[#dumbos + 1] = row
 end
 local flashCount = 0
-for _ = 1, 100 do
+local stepCount = 0
+local synchronisationStep = nil
+while synchronisationStep == nil or stepCount <= 100 do
+	stepCount = stepCount + 1
 	for i, row in pairs(dumbos) do
 		for j, _ in pairs(row) do
 			function mark_dumbo(i, j)
@@ -17,8 +20,10 @@ for _ = 1, 100 do
 				if energy == nil then return end
 				dumbos[i][j] = energy + 1
 				if energy == 9 then
-					print("yeah")
-					flashCount = flashCount + 1
+					if stepCount <= 100 then
+						-- only track flash count for the first 100 iterations
+						flashCount = flashCount + 1
+					end
 					for ioff = -1, 1 do
 						for joff = -1, 1 do
 							if ioff ~= 0 or joff ~= 0 then
@@ -31,20 +36,21 @@ for _ = 1, 100 do
 			mark_dumbo(i, j)
 		end
 	end
+	local synchronised = true
 	for i, row in pairs(dumbos) do
 		for j, val in pairs(row) do
 			if val > 9 then
 				dumbos[i][j] = 0
+			else
+				synchronised = false
 			end
 		end
 	end
-end
-for _, row in pairs(dumbos) do
-	msg = ""
-	for _, val in pairs(row) do
-		msg = msg .. val
+	if synchronisationStep == nil and synchronised then
+		synchronisationStep = stepCount
 	end
-	print(msg)
 end
-print("flash count")
+print("dumbo flash count after 100 steps")
 print(flashCount)
+print("\nsteps until synchronisation")
+print(synchronisationStep)
