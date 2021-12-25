@@ -34,5 +34,8 @@ all:
 11:
 	@../run.sh day_11.lua
 
+12:
+	@../run.sh day_12.pl
+
 %:
 	@echo 'unknown day number'
