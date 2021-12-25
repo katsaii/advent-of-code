@@ -20,24 +20,27 @@ is_upper(X) :-
 	string_chars(X, [Fst | _]),
 	char_type(Fst, upper).
 
-visitable(Node, _, _) :- is_upper(Node).
-visitable(Node, Pred, Visited) :-
+visitable(Node, _) :- is_upper(Node).
+visitable(Node, Visited) :-
 	\+ is_upper(Node),
-	call(Pred, Node, Visited).
+	\+ member(Node, Visited).
 
-path(Start, End, Pred, Path) :- path_(Start, End, Pred, [Start], Path).
+path(Start, End, MultipleVisits, Path) :-
+	path_(Start, End, MultipleVisits, [Start], Path).
 
 path_(End, End, _, Visited, Path) :- reverse(Visited, Path).
-path_(Start, End, Pred, Visited, Path) :-
+path_(Start, End, "yes", Visited, Path) :-
 	connected(Start, Next),
-	visitable(Next, Pred, Visited),
-	path_(Next, End, Pred, [Next | Visited], Path).
-
-enterOnce(Node, Visited) :- \+ member(Node, Visited).
+	\+ (Next = "start"; Next = "end"; visitable(Next, Visited)),
+	path_(Next, End, "no", [Next | Visited], Path).
+path_(Start, End, MultipleVisits, Visited, Path) :-
+	connected(Start, Next),
+	visitable(Next, Visited),
+	path_(Next, End, MultipleVisits, [Next | Visited], Path).
 
 main(_) :-
 	read_caves("in/day_12.txt"),
-	findall(Path, path("start", "end", enterOnce, Path), OncePaths),
+	findall(Path, path("start", "end", "yes", Path), OncePaths),
 	length(OncePaths, OnceLen),
 	write("number of paths through the cave system"), nl,
 	write(OnceLen), nl.
