@@ -100,6 +100,7 @@ homeworkSum p = foldr (+) 0 . map (unwrap . parse p) . lines
     where
     unwrap (Just (x, _)) = x
 
+main :: IO ()
 main = do
     input <- readFile "in/day_18.txt"
     putStrLn $ "sum of answers for basic maths homework"
