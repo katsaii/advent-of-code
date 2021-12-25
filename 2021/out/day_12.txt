@@ -1,2 +1,2 @@
-number of paths out of the cave system
+number of paths through the cave system
 3708
