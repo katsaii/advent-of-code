@@ -40,7 +40,11 @@ path_(Start, End, MultipleVisits, Visited, Path) :-
 
 main(_) :-
 	read_caves("in/day_12.txt"),
-	findall(Path, path("start", "end", "yes", Path), OncePaths),
+	findall(Path, path("start", "end", "no", Path), OncePaths),
+	findall(Path, path("start", "end", "yes", Path), TwicePaths),
 	length(OncePaths, OnceLen),
+	length(TwicePaths, TwiceLen),
 	write("number of paths through the cave system"), nl,
-	write(OnceLen), nl.
+	write(OnceLen), nl, nl,
+	write("number of paths through the thinner cave system"), nl,
+	write(TwiceLen), nl.

@@ -1,2 +1,5 @@
 number of paths through the cave system
+3708
+
+number of paths through the thinner cave system
 93858
