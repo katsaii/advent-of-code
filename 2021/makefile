@@ -31,5 +31,8 @@ all:
 10:
 	@../run.sh day_10.hs
 
+11:
+	@../run.sh day_11.lua
+
 %:
 	@echo 'unknown day number'
