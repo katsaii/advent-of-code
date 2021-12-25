@@ -16,22 +16,22 @@ read_caves_(Stream) :-
 connected(X, Y) :- cave(X, Y).
 connected(X, Y) :- cave(Y, X).
 
-visitable(Node, Visited) :-
+visitableOnce(Node, Visited) :-
 	string_chars(Node, [Fst | _]),
 	char_type(Fst, lower),
 	memberchk(Node, Visited).
 
-path(Start, End, Path) :- path_(Start, End, [Start], Path).
+path(Start, End, Pred, Path) :- path_(Start, End, Pred, [Start], Path).
 
-path_(End, End, Visited, Path) :- reverse(Visited, Path).
-path_(Start, End, Visited, Path) :-
+path_(End, End, _, Visited, Path) :- reverse(Visited, Path).
+path_(Start, End, Pred, Visited, Path) :-
 	connected(Start, Next),
-	\+ visitable(Next, Visited),
-	path_(Next, End, [Next | Visited], Path).
+	\+ call(Pred, Next, Visited),
+	path_(Next, End, Pred, [Next | Visited], Path).
 
 main(_) :-
 	read_caves("in/day_12.txt"),
-	findall(Path, path("start", "end", Path), Paths),
+	findall(Path, path("start", "end", visitableOnce, Path), Paths),
 	length(Paths, Len),
 	write("number of paths out of the cave system"), nl,
 	write(Len), nl.
