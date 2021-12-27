@@ -12,8 +12,9 @@ fn apply_rules(poly : &mut Polymer, rules : &InsertionRules) {
             substitutions.push((i, replacement));
         }
     }
-    for (i, replacement) in substitutions {
-        poly.insert(i, *replacement);
+    substitutions.sort_by(|a, b| a.0.cmp(&b.0));
+    for (i, replacement) in substitutions.iter().rev() {
+        poly.insert(*i, **replacement);
     }
 }
 
@@ -38,9 +39,8 @@ fn main() {
         let replacement = record.skip(4).next().unwrap();
         rules.insert((a, b), replacement);
     }
-    for _ in 0..100 {
+    for _ in 0..40 {
         apply_rules(&mut poly, &rules);
-        println!("hi");
     }
     let tally = tally_polymer(&poly);
     let most = tally.iter().max_by(|a, b| a.1.cmp(&b.1)).unwrap();
