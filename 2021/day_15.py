@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from copy import copy
-import heapq
+import heapq as pq
 
 @dataclass
 class Node:
@@ -27,7 +27,7 @@ def search(risk_map):
     queue = [start]
     dest_pos = (height - 1, width - 1)
     while queue:
-        node = heapq.heappop(queue)
+        node = pq.heappop(queue)
         if node.visited:
             continue
         if node.pos == dest_pos:
@@ -51,10 +51,24 @@ def search(risk_map):
                 nodes[nrow][ncol] = new_neighbour
                 new_neighbour.weight = new_weight
                 new_neighbour.parent = node
-                heapq.heappush(queue, new_neighbour)
+                pq.heappush(queue, new_neighbour)
     return nodes[-1][-1].weight
+
+def inc(row, n):
+    return [(risk - 1 + n) % 9 + 1 for risk in row]
 
 lines = open("in/day_15.txt").read().splitlines()
 risks = [[int(c) for c in line] for line in lines]
-print("total risk level of the journey")
+risks_large_row = [
+    row + inc(row, 1) + inc(row, 2) + inc(row, 3) + inc(row, 4)
+    for row in risks
+]
+risks_large = risks_large_row + \
+        [inc(row, 1) for row in risks_large_row] + \
+        [inc(row, 2) for row in risks_large_row] + \
+        [inc(row, 3) for row in risks_large_row] + \
+        [inc(row, 4) for row in risks_large_row]
+print("total risk level of the short journey")
 print(search(risks))
+print("\ntotal risk level of the long journey")
+print(search(risks_large))

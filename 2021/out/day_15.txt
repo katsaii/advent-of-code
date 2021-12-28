@@ -1,2 +1,5 @@
-total risk level of the journey
+total risk level of the short journey
 398
+
+total risk level of the long journey
+2817
