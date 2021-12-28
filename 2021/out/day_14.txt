@@ -1,2 +1,5 @@
-difference between most common (H=4439532321735) and least common (V=679219618858) elements
+difference between most common (H=3950) and least common (V=644) elements after 10 iterations
+3306
+
+difference between most common (H=4439532321735) and least common (V=679219618858) elements after 40 iterations
 3760312702877

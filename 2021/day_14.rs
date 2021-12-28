@@ -4,7 +4,6 @@ fn inc_key<T : Hash + Eq>(map : &mut HashMap<T, usize>, key : T, amount : usize)
     *map.entry(key).or_insert(0) += amount;
 }
 
-#[derive(Debug)]
 struct Polymer {
     char_map : HashMap<char, usize>,
     pair_map : HashMap<(char, char), usize>,
@@ -66,9 +65,14 @@ impl Polymer {
 fn main() {
     let content = fs::read_to_string("in/day_14.txt").unwrap();
     let mut poly = Polymer::load(&content).unwrap();
-    poly.apply_rules(40);
+    poly.apply_rules(10);
     let (lo, hi) = poly.frequencies().unwrap();
     print!("difference between most common ({}={}) ", hi.0, hi.1);
     print!("and least common ({}={}) ", lo.0, lo.1);
-    println!("elements\n{}", hi.1 - lo.1);
+    println!("elements after 10 iterations\n{}", hi.1 - lo.1);
+    poly.apply_rules(30);
+    let (lo, hi) = poly.frequencies().unwrap();
+    print!("\ndifference between most common ({}={}) ", hi.0, hi.1);
+    print!("and least common ({}={}) ", lo.0, lo.1);
+    println!("elements after 40 iterations\n{}", hi.1 - lo.1);
 }
