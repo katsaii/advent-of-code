@@ -1,0 +1,2 @@
+difference between most common (H=4439532321735) and least common (V=679219618858) elements
+3760312702877

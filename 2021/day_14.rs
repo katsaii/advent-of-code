@@ -1,51 +1,74 @@
-use std::{ fs, collections::HashMap };
+use std::{ fs, collections::HashMap, hash::Hash };
 
-type Polymer = Vec<char>;
-type InsertionRules = HashMap<(char, char), char>;
-
-fn apply_rules(poly : &mut Polymer, rules : &InsertionRules) {
-    let mut substitutions = Vec::new();
-    for i in 1..(poly.len()) {
-        let a = poly[i - 1];
-        let b = poly[i];
-        if let Some(replacement) = rules.get(&(a, b)) {
-            substitutions.push((i, replacement));
-        }
-    }
-    substitutions.sort_by(|a, b| a.0.cmp(&b.0));
-    for (i, replacement) in substitutions.iter().rev() {
-        poly.insert(*i, **replacement);
-    }
+fn inc_key<T : Hash + Eq>(map : &mut HashMap<T, usize>, key : T, amount : usize) {
+    *map.entry(key).or_insert(0) += amount;
 }
 
-fn tally_polymer(poly : &Polymer) -> HashMap<char, usize> {
-    let mut tally = HashMap::new();
-    for chr in poly {
-        *tally.entry(*chr).or_insert(0) += 1;
+#[derive(Debug)]
+struct Polymer {
+    char_map : HashMap<char, usize>,
+    pair_map : HashMap<(char, char), usize>,
+    rules : HashMap<(char, char), char>,
+}
+
+impl Polymer {
+    fn load(src : &str) -> Option<Self> {
+        let mut lines = src.lines();
+        let mut char_map = HashMap::new();
+        let mut pair_map = HashMap::new();
+        let mut rules = HashMap::new();
+        let initial_state : Vec<_> = lines.next()?.chars().collect();
+        for i in 0..(initial_state.len()) {
+            let chr = initial_state[i];
+            if i > 0 {
+                let chr_prev = initial_state[i - 1];
+                inc_key(&mut pair_map, (chr_prev, chr), 1);
+            }
+            inc_key(&mut char_map, chr, 1);
+        }
+        lines.next();
+        for line in lines {
+            let mut record = line.chars();
+            let a = record.next()?;
+            let b = record.next()?;
+            let replacement = record.skip(4).next()?;
+            rules.insert((a, b), replacement);
+        }
+        Some(Self { char_map, pair_map, rules })
     }
-    tally
+
+    fn apply_rules(&mut self, n : usize) {
+        for _ in 0..n {
+            let mut substitutions = Vec::new();
+            for (&pair, &count) in &self.pair_map {
+                if let Some(&replacement) = self.rules.get(&pair) {
+                    substitutions.push((pair, replacement, count));
+                }
+            }
+            for (pair, ..) in &substitutions {
+                self.pair_map.remove(pair);
+            }
+            for (pair, replacement, count) in substitutions {
+                inc_key(&mut self.pair_map, (pair.0, replacement), count);
+                inc_key(&mut self.pair_map, (replacement, pair.1), count);
+                inc_key(&mut self.char_map, replacement, count);
+            }
+        }
+    }
+
+    fn frequencies(&self) -> Option<((char, usize), (char, usize))> {
+        let lo = self.char_map.iter().min_by(|a, b| a.1.cmp(&b.1))?;
+        let hi = self.char_map.iter().max_by(|a, b| a.1.cmp(&b.1))?;
+        Some(((*lo.0, *lo.1), (*hi.0, *hi.1)))
+    }
 }
 
 fn main() {
     let content = fs::read_to_string("in/day_14.txt").unwrap();
-    let mut lines = content.lines();
-    let mut poly = lines.next().unwrap().chars().collect::<Polymer>();
-    lines.next();
-    let mut rules = HashMap::new();
-    for line in lines {
-        let mut record = line.chars();
-        let a = record.next().unwrap();
-        let b = record.next().unwrap();
-        let replacement = record.skip(4).next().unwrap();
-        rules.insert((a, b), replacement);
-    }
-    for _ in 0..40 {
-        apply_rules(&mut poly, &rules);
-    }
-    let tally = tally_polymer(&poly);
-    let most = tally.iter().max_by(|a, b| a.1.cmp(&b.1)).unwrap();
-    let least = tally.iter().min_by(|a, b| a.1.cmp(&b.1)).unwrap();
-    print!("difference between most common ({}={}) ", most.0, most.1);
-    print!("and least common ({}={}) ", least.0, least.1);
-    println!("elements\n{}", most.1 - least.1);
+    let mut poly = Polymer::load(&content).unwrap();
+    poly.apply_rules(40);
+    let (lo, hi) = poly.frequencies().unwrap();
+    print!("difference between most common ({}={}) ", hi.0, hi.1);
+    print!("and least common ({}={}) ", lo.0, lo.1);
+    println!("elements\n{}", hi.1 - lo.1);
 }
