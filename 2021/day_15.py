@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from copy import copy
 import heapq
 
 @dataclass
@@ -6,12 +7,11 @@ class Node:
     pos : (int, int)
     risk : int
     visited : bool
-    inserted : bool
     parent : ...
     weight : int
 
     def new(row, col, risk):
-        return Node((row, col), risk, False, False, None, float('inf'))
+        return Node((row, col), risk, False, None, float('inf'))
 
     def __lt__(self, other):
         return self.weight < other.weight
@@ -23,13 +23,14 @@ def search(risk_map):
     ]
     height, width = len(nodes), len(nodes[0])
     start = nodes[0][0]
-    dest = nodes[-1][-1]
     start.weight = 0
-    start.inserted = True
     queue = [start]
+    dest_pos = (height - 1, width - 1)
     while queue:
         node = heapq.heappop(queue)
-        if node == dest:
+        if node.visited:
+            continue
+        if node.pos == dest_pos:
             break
         node.visited = True
         row, col = node.pos
@@ -45,14 +46,13 @@ def search(risk_map):
                 continue
             new_weight = node.weight + neighbour.risk
             if new_weight < neighbour.weight:
-                neighbour.weight = new_weight
-                neighbour.parent = node
-                if not neighbour.inserted:
-                    queue.append(neighbour)
-                    dirty = True
-        if dirty:
-            heapq.heapify(queue)
-    return dest.weight
+                new_neighbour = copy(neighbour)
+                neighbour.visited = True
+                nodes[nrow][ncol] = new_neighbour
+                new_neighbour.weight = new_weight
+                new_neighbour.parent = node
+                heapq.heappush(queue, new_neighbour)
+    return nodes[-1][-1].weight
 
 lines = open("in/day_15.txt").read().splitlines()
 risks = [[int(c) for c in line] for line in lines]
