@@ -114,6 +114,42 @@ void snail_split(struct SnailN* snail) {
 	snail_add_inplace(snail, left, right);
 }
 
+void snail_reduce_explosions(struct SnailN* snail) {
+	if (snail != NULL && snail->type == PAIR) {
+		snail_reduce_explosions(snail->left);
+		snail_reduce_explosions(snail->right);
+		if (snail->depth > 4) {
+			snail_explode(snail);
+			snail_reduce_explosions(snail->prev);
+		}
+	}
+}
+
+void snail_reduce_splits(struct SnailN* snail) {
+	if (snail == NULL) {
+		return;
+	}
+	if (snail->type == REGULAR) {
+		if (snail->value > 9) {
+			snail_split(snail);
+			snail_reduce_explosions(snail);
+			if (snail->type == REGULAR) {
+				// we exploded
+				snail_reduce_splits(snail->prev);
+			}
+			snail_reduce_splits(snail);
+		}
+	} else {
+		snail_reduce_splits(snail->left);
+		snail_reduce_splits(snail->right);
+	}
+}
+
+void snail_reduce(struct SnailN* snail) {
+	snail_reduce_explosions(snail);
+	snail_reduce_splits(snail);
+}
+
 void snail_show(struct SnailN* snail) {
 	if (snail->type == REGULAR) {
 		printf("%d", snail->value);
@@ -147,9 +183,16 @@ struct SnailN* snail_read(FILE* file) {
 
 int main() {
 	FILE *file = fopen("in/day_18.txt", "r");
-	struct SnailN* snail = snail_read(file);
-	snail_show(snail); printf("\n");
-	snail_explode(snail->left->right->right->right);
+	struct SnailN* snail = NULL;
+	while (1) {
+		struct SnailN* next = snail_read(file);
+		if (next == NULL) {
+			break;
+		}
+		snail = snail == NULL ? next : snail_add(snail, next);
+		snail_show(snail); printf("\n"); fflush(stdout);
+		snail_reduce(snail);
+	}
 	snail_show(snail); printf("\n");
 	return 0;
 }
