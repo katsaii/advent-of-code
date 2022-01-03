@@ -79,6 +79,22 @@ struct SnailN* snail_add(struct SnailN* left, struct SnailN* right) {
 	return snail;
 }
 
+void snail_free(struct SnailN* snail) {
+	if (snail->type == PAIR) {
+		snail_free(snail->left);
+		snail_free(snail->right);
+	}
+	snail_free(snail);
+}
+
+struct SnailN* snail_clone(struct SnailN* snail) {
+	if (snail->type == REGULAR) {
+		return snail_number(snail->value);
+	} else {
+		return snail_add(snail_clone(snail->left), snail_clone(snail->right));
+	}
+}
+
 void snail_explode(struct SnailN* snail) {
 	snail->type = REGULAR;
 	struct SnailN* left = snail->left;
@@ -150,6 +166,16 @@ void snail_reduce(struct SnailN* snail) {
 	snail_reduce_splits(snail);
 }
 
+int snail_magnitude(struct SnailN* snail) {
+	if (snail->type == REGULAR) {
+		return snail->value;
+	} else {
+		return
+			3 * snail_magnitude(snail->left) +
+			2 * snail_magnitude(snail->right);
+	}
+}
+
 void snail_show(struct SnailN* snail) {
 	if (snail->type == REGULAR) {
 		printf("%d", snail->value);
@@ -190,9 +216,8 @@ int main() {
 			break;
 		}
 		snail = snail == NULL ? next : snail_add(snail, next);
-		snail_show(snail); printf("\n"); fflush(stdout);
 		snail_reduce(snail);
 	}
-	snail_show(snail); printf("\n");
+	printf("magnitude of snail number sum\n%d\n", snail_magnitude(snail));
 	return 0;
 }
