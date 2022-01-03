@@ -81,22 +81,6 @@ struct SnailN* snail_add(struct SnailN* left, struct SnailN* right) {
 	return snail;
 }
 
-void snail_free(struct SnailN* snail) {
-	if (snail->type == PAIR) {
-		snail_free(snail->left);
-		snail_free(snail->right);
-	}
-	free(snail);
-}
-
-struct SnailN* snail_clone(struct SnailN* snail) {
-	if (snail->type == REGULAR) {
-		return snail_number(snail->value);
-	} else {
-		return snail_add(snail_clone(snail->left), snail_clone(snail->right));
-	}
-}
-
 void snail_explode(struct SnailN* snail) {
 	snail->type = REGULAR;
 	struct SnailN* left = snail->left;
@@ -178,15 +162,19 @@ int snail_magnitude(struct SnailN* snail) {
 	}
 }
 
-void snail_show(struct SnailN* snail) {
+void snail_free(struct SnailN* snail) {
+	if (snail->type == PAIR) {
+		snail_free(snail->left);
+		snail_free(snail->right);
+	}
+	free(snail);
+}
+
+struct SnailN* snail_clone(struct SnailN* snail) {
 	if (snail->type == REGULAR) {
-		printf("%d", snail->value);
+		return snail_number(snail->value);
 	} else {
-		printf("[");
-		snail_show(snail->left);
-		printf(", ");
-		snail_show(snail->right);
-		printf("]");
+		return snail_add(snail_clone(snail->left), snail_clone(snail->right));
 	}
 }
 
