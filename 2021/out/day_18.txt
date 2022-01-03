@@ -1,2 +1,5 @@
 magnitude of snail number sum
 4111
+
+max magnitude of pairs of snail numbers
+4917

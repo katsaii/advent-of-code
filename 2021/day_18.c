@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define BUFFER_SIZE 2048
+
 enum SnailNType {
 	REGULAR,
 	PAIR,
@@ -84,7 +86,7 @@ void snail_free(struct SnailN* snail) {
 		snail_free(snail->left);
 		snail_free(snail->right);
 	}
-	snail_free(snail);
+	free(snail);
 }
 
 struct SnailN* snail_clone(struct SnailN* snail) {
@@ -209,15 +211,45 @@ struct SnailN* snail_read(FILE* file) {
 
 int main() {
 	FILE *file = fopen("in/day_18.txt", "r");
-	struct SnailN* snail = NULL;
-	while (1) {
-		struct SnailN* next = snail_read(file);
-		if (next == NULL) {
+	struct SnailN* snails[BUFFER_SIZE];
+	int limit = 0;
+	for (int i = 0; i < BUFFER_SIZE; i += 1, limit += 1) {
+		struct SnailN* snail = snail_read(file);
+		if (snail == NULL) {
 			break;
 		}
-		snail = snail == NULL ? next : snail_add(snail, next);
-		snail_reduce(snail);
+		snails[i] = snail;
 	}
-	printf("magnitude of snail number sum\n%d\n", snail_magnitude(snail));
+	struct SnailN* acc = NULL;
+	for (int i = 0; i < limit; i += 1) {
+		struct SnailN* snail = snail_clone(snails[i]);
+		acc = acc == NULL ? snail : snail_add(acc, snail);
+		snail_reduce(acc);
+	}
+	int mag_max = 0;
+	for (int i = 0; i < limit; i += 1) {
+		for (int j = 0; j < limit; j += 1) {
+			if (i == j) {
+				continue;
+			}
+			struct SnailN* forward = snail_add(
+					snail_clone(snails[i]), snail_clone(snails[j]));
+			snail_reduce(forward);
+			struct SnailN* backward = snail_add(
+					snail_clone(snails[j]), snail_clone(snails[i]));
+			snail_reduce(backward);
+			int mag_forward = snail_magnitude(forward);
+			int mag_backward = snail_magnitude(backward);
+			int mag = mag_forward > mag_backward ? mag_forward : mag_backward;
+			if (mag > mag_max) {
+				mag_max = mag;
+			}
+			snail_free(forward);
+			snail_free(backward);
+		}
+	}
+	printf("magnitude of snail number sum\n%d\n", snail_magnitude(acc));
+	printf("\nmax magnitude of pairs of snail numbers\n%d\n", mag_max);
+	snail_free(acc);
 	return 0;
 }
