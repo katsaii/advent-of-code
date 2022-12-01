@@ -2,7 +2,7 @@ import Data.List (groupBy, sort)
 
 main :: IO ()
 main = do
-    elves <- map (\xs -> [read x :: Int | x <- xs])
+    elves <- map (map read)
              <$> filter (/=[""])
              <$> groupBy (\a b -> a /= "" && b /= "")
              <$> lines
