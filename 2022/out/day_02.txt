@@ -1,2 +1,5 @@
+total score when following the assumed strategy guide
 8392
-2500
+
+total score when following the strategy guide correctly
+10116
