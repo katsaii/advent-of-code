@@ -1,6 +1,6 @@
 langs = []
 solutions = { }
-[2019, 2020, 2021].each do |year|
+[2019, 2020, 2021, 2022].each do |year|
     page = File.read("#{year}.md")
     page.scan(/\s*\|[^|]*\[.+\]\((.*?)\)[^|]*\|\s*([^|-]*?)\s*\|[^|]*\|/) do |x|
         solution = x[0]
@@ -22,3 +22,4 @@ langs_tally.each do |lang, n|
 end
 out << "\n"
 File.write("languages.md", out)
+puts "DONE"
