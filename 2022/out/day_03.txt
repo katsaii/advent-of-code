@@ -1,1 +1,5 @@
+sum of priorities of duplicate items in each rucksack
 7727
+
+sum of priorities of badges
+2609
