@@ -15,6 +15,8 @@ fs.readFile("in/day_04.txt", (_, data) => {
 	const totalOverlaps = lines.reduce((acc, [a1, a2, b1, b2]) => {
 		return acc + (a1 <= b2 && a2 >= b1);
 	}, 0);
+	console.log("total number of subsets");
 	console.log(totalSubsets);
-	console.log(totalOverlaps)
+	console.log("\ntotal number of overlaps")
+	console.log(totalOverlaps);
 })
