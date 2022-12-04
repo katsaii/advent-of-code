@@ -17,6 +17,6 @@ fs.readFile("in/day_04.txt", (_, data) => {
 	}, 0);
 	console.log("total number of subsets");
 	console.log(totalSubsets);
-	console.log("\ntotal number of overlaps")
+	console.log("\ntotal number of overlaps");
 	console.log(totalOverlaps);
-})
+});
