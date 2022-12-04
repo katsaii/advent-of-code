@@ -14,8 +14,8 @@ A table of programming languages used during the events, and how many solutions 
 | Shell | 2 | <code><a href="../2021/day_02.sh">#</a><a href="../2022/day_02.sh">#</a></code> |
 | Go | 2 | <code><a href="../2020/day_24.go">#</a><a href="../2021/day_04.go">#</a></code> |
 | Lua | 2 | <code><a href="../2020/day_13.lua">#</a><a href="../2021/day_11.lua">#</a></code> |
+| JavaScript | 2 | <code><a href="../2020/day_01.js">#</a><a href="../2022/day_04.sh">#</a></code> |
 | Zig | 1 | <code><a href="../2021/day_06.zig">#</a></code> |
 | ChucK | 1 | <code><a href="../2021/day_01.ck">#</a></code> |
 | Haxe | 1 | <code><a href="../2020/day_22.hx">#</a></code> |
 | C++ | 1 | <code><a href="../2020/day_15.cpp">#</a></code> |
-| JavaScript | 1 | <code><a href="../2020/day_01.js">#</a></code> |
