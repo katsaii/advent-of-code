@@ -32,4 +32,7 @@ for [n, from_, to] in insts:
     "".join([items[-1] for items in stacks])
     for stacks in [stacks_9000, stacks_9001]
 ]
-print(top_9000, top_9001)
+print("top crates after cratemover 9000 algorithm")
+print(top_9000)
+print("\ntop crates after cratemover 9001 algorithm")
+print(top_9001)
