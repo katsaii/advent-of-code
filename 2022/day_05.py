@@ -12,9 +12,8 @@ for col in range(stack_count):
         if item == " ":
             break
         stack.append(item)
-import re
 insts = [
-    [int(item) for item in re.split("[^0-9]", inst) if item]
+    [int(item) for item in inst.split() if item.isnumeric()]
     for inst in lines_tail
 ]
 import copy
@@ -25,9 +24,7 @@ for [n, from_, to] in insts:
 stacks_9001 = copy.deepcopy(stacks)
 for [n, from_, to] in insts:
     for offset in range(n)[::-1]:
-        src_stack = stacks_9001[from_ - 1]
-        stacks_9001[to - 1].append(src_stack[-1 - offset])
-        del src_stack[-1 - offset]
+        stacks_9001[to - 1].append(stacks_9001[from_ - 1].pop(-1 - offset))
 [top_9000, top_9001] = [
     "".join([items[-1] for items in stacks])
     for stacks in [stacks_9000, stacks_9001]
