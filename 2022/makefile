@@ -13,5 +13,8 @@ all:
 4:
 	@../run.sh day_04.js
 
+5:
+	@../run.sh day_05.py
+
 %:
 	@echo 'unknown day number'
