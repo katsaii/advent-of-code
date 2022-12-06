@@ -1,12 +1,9 @@
 use std::{ fs, collections::HashSet };
 
-const SIZE : usize = 4;
-
-fn start_of_packet(packet : &[u8]) -> usize {
-    for i in 0..(packet.len() - SIZE) {
-        let window : HashSet<_> = packet[i..(i + SIZE)].iter().collect();
-        if window.len() == SIZE {
-            return i + SIZE;
+fn packet_marker(packet : &[u8], size : usize) -> usize {
+    for i in 0..packet.len() {
+        if packet[i..(i + size)].iter().collect::<HashSet<_>>().len() == size {
+            return i + size;
         }
     }
     unreachable!();
@@ -14,5 +11,6 @@ fn start_of_packet(packet : &[u8]) -> usize {
 
 fn main() {
     let packet = fs::read_to_string("in/day_06.txt").unwrap().into_bytes();
-    println!("start of packet\n{}", start_of_packet(&packet));
+    println!("start of packet\n{}", packet_marker(&packet, 4));
+    println!("\nstart of message\n{}", packet_marker(&packet, 14));
 }
