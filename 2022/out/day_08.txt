@@ -1,1 +1,5 @@
-visible_count = 1543
+total number of visible trees from the edges of the forest
+1543
+
+maximum scenic score out of trees in the forest
+595080
