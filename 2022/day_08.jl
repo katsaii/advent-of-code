@@ -15,16 +15,7 @@ for i = 1:height
 		if visible
 			global visible_count += 1
 		end
-		function view_dist(trees)
-			local n = 0
-			for idx = eachindex(trees)
-				n += 1
-				if trees[idx] >= tree
-					break
-				end
-			end
-			n
-		end
+		view_dist(trees) = something(findfirst(tree .<= trees), length(trees))
 		scenic_score = prod(map(view_dist, neighbours))
 		if scenic_score > max_scenic_score
 			global max_scenic_score = scenic_score
