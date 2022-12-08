@@ -39,7 +39,7 @@ total_size = root[:size]
 unused_space = 70000000 - total_size
 small_total_size = dir_sizes.take_while{ |x| x < 100000 }.sum
 delete_size = dir_sizes.select{ |x| unused_space + x >= 30000000 }.sort[0]
-
+puts "total size of directories smaller than 100000"
 puts small_total_size
-
+puts "\nthe size of the smallest directory to delete to free enough space"
 puts delete_size

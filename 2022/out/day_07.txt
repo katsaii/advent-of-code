@@ -1,2 +1,5 @@
+total size of directories smaller than 100000
 1783610
+
+the size of the smallest directory to delete to free enough space
 4370655
