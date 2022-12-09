@@ -10,9 +10,9 @@ A table of programming languages used during the events, and how many solutions 
 | Haskell | 6 | <code><a href="../2019/day_01.hs">#</a><a href="../2020/day_04.hs">#</a><a href="../2020/day_06.hs">#</a><a href="../2020/day_18.hs">#</a><a href="../2021/day_10.hs">#</a><a href="../2022/day_01.hs">#</a></code> |
 | C | 4 | <code><a href="../2020/day_03.c">#</a><a href="../2020/day_12.c">#</a><a href="../2021/day_07.c">#</a><a href="../2021/day_18.c">#</a></code> |
 | Julia | 3 | <code><a href="../2021/day_05.jl">#</a><a href="../2021/day_09.jl">#</a><a href="../2022/day_08.jl">#</a></code> |
+| Go | 3 | <code><a href="../2020/day_24.go">#</a><a href="../2021/day_04.go">#</a><a href="../2022/day_09.go">#</a></code> |
 | Prolog | 3 | <code><a href="../2020/day_07.pl">#</a><a href="../2021/day_03.pl">#</a><a href="../2021/day_12.pl">#</a></code> |
 | Shell | 2 | <code><a href="../2021/day_02.sh">#</a><a href="../2022/day_02.sh">#</a></code> |
-| Go | 2 | <code><a href="../2020/day_24.go">#</a><a href="../2021/day_04.go">#</a></code> |
 | Lua | 2 | <code><a href="../2020/day_13.lua">#</a><a href="../2021/day_11.lua">#</a></code> |
 | JavaScript | 2 | <code><a href="../2020/day_01.js">#</a><a href="../2022/day_04.js">#</a></code> |
 | Zig | 1 | <code><a href="../2021/day_06.zig">#</a></code> |

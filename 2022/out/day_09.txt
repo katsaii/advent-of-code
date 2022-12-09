@@ -1,2 +1,5 @@
+number of unique tiles visited by the tail of the short rope
 5960
+
+number of unique tiles visited by the tail of the long rope
 2327

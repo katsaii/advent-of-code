@@ -72,6 +72,8 @@ func main() {
 			rope_visits_long[fmt.Sprint(tail_long.x, tail_long.y)] = true
 		}
 	}
+	fmt.Println("number of unique tiles visited by the tail of the short rope")
 	fmt.Println(len(rope_visits))
+	fmt.Println("\nnumber of unique tiles visited by the tail of the long rope")
 	fmt.Println(len(rope_visits_long))
 }
