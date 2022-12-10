@@ -12,5 +12,7 @@ for inst in [inst.split() for inst in open("in/day_10.txt").readlines()]:
         cycle += 1
     if inst[0] != "noop":
         x += int(inst[1])
+print("sum of interesting signals")
 print(sum(signals))
-print(crt)
+print("\ncrt display output")
+print(crt.strip())
