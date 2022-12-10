@@ -4,7 +4,7 @@ A table of programming languages used during the events, and how many solutions 
 
 | Language | Count | Tally |
 | --- | --- | --- |
-| Python | 7 | <code><a href="../2020/day_05.py">#</a><a href="../2020/day_09.py">#</a><a href="../2020/day_10.py">#</a><a href="../2020/day_23.py">#</a><a href="../2021/day_15.py">#</a><a href="../2022/day_05.py">#</a><a href="../2022/day_10.go">#</a></code> |
+| Python | 7 | <code><a href="../2020/day_05.py">#</a><a href="../2020/day_09.py">#</a><a href="../2020/day_10.py">#</a><a href="../2020/day_23.py">#</a><a href="../2021/day_15.py">#</a><a href="../2022/day_05.py">#</a><a href="../2022/day_10.py">#</a></code> |
 | Ruby | 7 | <code><a href="../2020/day_02.rb">#</a><a href="../2020/day_14.rb">#</a><a href="../2020/day_16.rb">#</a><a href="../2020/day_21.rb">#</a><a href="../2021/day_08.rb">#</a><a href="../2022/day_03.rb">#</a><a href="../2022/day_07.rb">#</a></code> |
 | Rust | 7 | <code><a href="../2019/day_02.rs">#</a><a href="../2020/day_08.rs">#</a><a href="../2020/day_11.rs">#</a><a href="../2020/day_17.rs">#</a><a href="../2020/day_19.rs">#</a><a href="../2021/day_14.rs">#</a><a href="../2022/day_06.py">#</a></code> |
 | Haskell | 6 | <code><a href="../2019/day_01.hs">#</a><a href="../2020/day_04.hs">#</a><a href="../2020/day_06.hs">#</a><a href="../2020/day_18.hs">#</a><a href="../2021/day_10.hs">#</a><a href="../2022/day_01.hs">#</a></code> |
