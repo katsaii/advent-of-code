@@ -28,5 +28,8 @@ all:
 9:
 	@../run.sh day_09.go
 
+10:
+	@../run.sh day_10.py
+
 %:
 	@echo 'unknown day number'
