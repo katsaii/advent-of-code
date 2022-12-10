@@ -4,6 +4,7 @@ Solutions to Advent of Code with a goal of using as many different programming l
 
 ## Summaries
 
+ - [2022](./summaries/2022.md)
  - [2021](./summaries/2021.md)
  - [2020](./summaries/2020.md)
  - [2019](./summaries/2019.md)
