@@ -1,1 +1,5 @@
+total monkey business after 20 rounds
+95472
+
+total monkey business after 10000 rounds
 17926061332
