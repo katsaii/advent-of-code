@@ -32,7 +32,7 @@ all:
 	@../run.sh day_10.py
 
 11:
-	@../run.sh day_11.rs
+	@../run.sh day_11.py
 
 %:
 	@echo 'unknown day number'
