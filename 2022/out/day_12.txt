@@ -1,1 +1,5 @@
-steps = 383
+shortest path between the start and end of the trail
+383
+
+shortest possible path from the bottom of the mountain to the end of the trail
+377
