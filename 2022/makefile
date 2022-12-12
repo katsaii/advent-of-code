@@ -34,5 +34,8 @@ all:
 11:
 	@../run.sh day_11.py
 
+12:
+	@../run.sh day_12.rs
+
 %:
 	@echo 'unknown day number'
