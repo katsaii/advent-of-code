@@ -1,1 +1,5 @@
+sum of the indices for correctly sorted pairs
 5905
+
+decoder key
+21691
