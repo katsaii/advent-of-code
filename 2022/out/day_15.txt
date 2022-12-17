@@ -1,2 +1,5 @@
-n = 26
-(distress_x, distress_y, distress_x * 4000000 + distress_y) = (14, 11, 56000011)
+number of positions which cannot contain a beacon on row y=2000000
+4985193
+
+tuning frequency for distress beacon
+11583882601918

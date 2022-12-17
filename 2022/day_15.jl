@@ -39,7 +39,7 @@ function resolve_collision(x::Int64, y::Int64)
 end
 const minx = minimum([s[1] - manhatten(s...) for s in sensors])
 const maxx = maximum([s[1] + manhatten(s...) for s in sensors])
-const y = 10
+const y = 2000000
 n = 0
 for x in minx:maxx
 	dy = resolve_collision(x, y)
@@ -48,9 +48,8 @@ for x in minx:maxx
 	end
 end
 n -= length(Set([(bx, by) for (_, _, bx, by) in sensors if by == y]))
-@show n
 distress_x, distress_y = 0, 0
-const size = 20
+const size = 4000000
 prev = 0
 for x in 0:size
 	dy = resolve_collision(x, 0)
@@ -59,4 +58,7 @@ for x in 0:size
 		break
 	end
 end
-@show distress_x, distress_y, distress_x * 4000000 + distress_y
+println("number of positions which cannot contain a beacon on row y=2000000")
+println(n)
+println("\ntuning frequency for distress beacon")
+println(distress_x * 4000000 + distress_y)
