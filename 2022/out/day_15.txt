@@ -1,1 +1,2 @@
-occupied_y2000000 = 4985193
+n = 26
+(distress_x, distress_y, distress_x * 4000000 + distress_y) = (14, 11, 56000011)
