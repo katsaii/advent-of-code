@@ -1,1 +1,5 @@
+number of iterations for particles to fall into the void
 1330
+
+number of iterations for particles to fill the board with a floor
+26139
