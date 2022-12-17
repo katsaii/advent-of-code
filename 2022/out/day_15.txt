@@ -1,1 +1,1 @@
-length(no_beacons) - length(beacons) = 4985193
+occupied_y2000000 = 4985193
