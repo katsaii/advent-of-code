@@ -40,5 +40,8 @@ all:
 13:
 	@../run.sh day_13.js
 
+14:
+	@../run.sh day_14.rb
+
 %:
 	@echo 'unknown day number'
